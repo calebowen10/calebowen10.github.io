@@ -18,11 +18,10 @@
             background-color: #f5f5f5;
         }
 
-        /* Header/Navigation */
         header {
             background-color: white;
             padding: 1.5rem 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -60,31 +59,29 @@
             color: #5b9bd5;
         }
 
-        /* Main Content */
         main {
-            max-width: 1200px;
+            max-width: 1150px;
             margin: 3rem auto;
             padding: 0 2rem;
         }
 
         .about-section {
             display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 3rem;
+            grid-template-columns: 310px 1fr;
+            gap: 3.5rem;
             background: white;
-            padding: 3rem;
+            padding: 3.5rem;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
         }
 
-        /* Sidebar */
         .sidebar {
             text-align: center;
         }
 
         .profile-img {
-            width: 200px;
-            height: 200px;
+            width: 215px;
+            height: 215px;
             border-radius: 50%;
             object-fit: cover;
             margin-bottom: 1.5rem;
@@ -92,7 +89,7 @@
         }
 
         .sidebar h1 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             margin-bottom: 0.5rem;
             color: #333;
         }
@@ -102,6 +99,7 @@
             font-weight: 400;
             color: #666;
             margin-bottom: 1.5rem;
+            line-height: 1.5;
         }
 
         .sidebar p {
@@ -114,10 +112,12 @@
         .contact-info {
             text-align: left;
             margin-top: 2rem;
+            border-top: 1px solid #eee;
+            padding-top: 1.5rem;
         }
 
         .contact-info p {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
             font-size: 0.9rem;
         }
 
@@ -130,21 +130,33 @@
             text-decoration: underline;
         }
 
-        /* Main Content Area */
         .content {
-            padding-left: 2rem;
+            padding-left: 1rem;
         }
 
         .content h2 {
             font-size: 2rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.3rem;
             color: #333;
         }
 
+        .intro-lines {
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        .intro-lines p {
+            margin-bottom: 0.3rem;
+            font-size: 1.05rem;
+            color: #333;
+            line-height: 1.6;
+        }
+
         .content p {
-            margin-bottom: 1.5rem;
-            line-height: 1.8;
+            margin-bottom: 1.45rem;
+            line-height: 1.85;
             color: #555;
+            font-size: 1rem;
         }
 
         .content a {
@@ -161,23 +173,35 @@
             color: #333;
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
             .about-section {
                 grid-template-columns: 1fr;
                 gap: 2rem;
+                padding: 2rem;
             }
 
             .content {
                 padding-left: 0;
             }
 
-            .nav-links {
-                gap: 1rem;
+            .contact-info {
+                text-align: center;
             }
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav>
@@ -195,38 +219,75 @@
         <section id="about" class="about-section">
             <aside class="sidebar">
                 <img src="My headshot.jpeg" alt="Caleb Owen" class="profile-img">
+
                 <h1>Caleb Owen</h1>
-                <h2>Graduate Research Assistant at<br>the University of Connecticut</h2>
-                <p>Data Analyst and PhD Student in Psychology, based in CT.</p>
+
+                <h2>
+                    Data Analytics Engineering<br>
+                    Industrial Engineering<br>
+                    Product & Systems Analytics
+                </h2>
+
+                <p>
+                    Behavioral science graduate building toward data analytics engineering,
+                    product analytics, operations, and human-centered technology.
+                </p>
                 
                 <div class="contact-info">
-                    <p>📧 caleb.owen@uconn.edu</p>
-                    <p>📍 New Haven, CT</p>
-                    <p>💻 <a href="https://github.com/calebowen10/">Github</a></p>
+                    <p>📧 <a href="mailto:calebowen1126@gmail.com">calebowen1126@gmail.com</a></p>
+                    <p>📍 Connecticut / Greater Boston</p>
+                    <p>💻 <a href="https://github.com/calebowen10/">GitHub</a></p>
+                    <p>🔗 <a href="https://www.linkedin.com/in/calebowen1126/">LinkedIn</a></p>
                 </div>
             </aside>
 
             <div class="content">
                 <h2>About me</h2>
-                <p>
-                    Welcome! I'm Caleb Owen, a <span class="highlight">Graduate Research Assistant</span> at 
-                    <a href="https://psychology.uconn.edu/person/caleb-owen/">University of Connecticut</a>.
-                </p>
-                
-                <p>
-                    In 2025, I started my PhD in <a href="https://psychology.uconn.edu/phd/ecological-psychology/">Psychology</a> at UConn, 
-                    where I am a part of the <a href="https://dyscord-lab.github.io/">Dyscord Lab</a>, investigating 
-                    what drives students to succeed in different settings. I'm a former fellow of the <a href="https://www.chdi.org/"> Child Health and Development Institute</a>.
-                </p>
-                
-                <p>
-  I focus on motivation, learning, and social coordination. I use <strong>data science</strong> and
-  <strong>statistics</strong> including: causal inference, A/B testing, multilevel modeling alongside 
-  <strong>machine learning</strong> and <strong>engineering</strong>
-  to study student success and health equity. I prioritize <span class="highlight">open, reproducible</span> workflows
-  that translate analysis into real-world impact.
-</p>
 
+                <div class="intro-lines">
+                    <p><span class="highlight">University of Connecticut</span></p>
+                    <p>B.A. Psychological Sciences</p>
+                    <p>Graduate, Class of 2024</p>
+                    <br>
+                    <p><span class="highlight">Northeastern University</span></p>
+                    <p>Graduate Student</p>
+                    <p>Industrial Engineering / Data Analytics Engineering</p>
+                </div>
+
+                <p>
+                    My interest in data, systems, and human behavior started with a simple question:
+                    how do people make decisions, work together, and move through complex environments?
+                    At the University of Connecticut, I studied psychological sciences, where I became
+                    interested in motivation, learning, social coordination, and the ways people interact
+                    with the systems around them. That background taught me to look beyond the numbers and
+                    ask what the data says about real people, real processes, and real outcomes.
+                </p>
+
+                <p>
+                    Over time, my work in research and healthcare quality improvement pushed me toward
+                    <span class="highlight">data analytics, engineering, and systems thinking</span>.
+                    As a Data Analyst Fellow at the Child Health and Development Institute, I worked with
+                    large behavioral health datasets, cleaned and transformed messy data, built reporting
+                    tools, and supported quality improvement efforts across statewide service systems.
+                    That experience helped me realize that I enjoy turning complex information into
+                    something organized, useful, and actionable.
+                </p>
+
+                <p>
+                    At Northeastern, I am building on that foundation through graduate study in
+                    <span class="highlight">industrial engineering and data analytics</span>. I am especially
+                    interested in product analytics, operations, live service systems, process improvement,
+                    and data engineering. I enjoy work that combines technical problem-solving with
+                    human-centered thinking, whether that means improving a dashboard, studying user behavior,
+                    optimizing a workflow, or helping teams make better decisions from data.
+                </p>
+
+                <p>
+                    Outside of academics and work, I enjoy reading, training, hiking, playing guitar, and
+                    exploring games and sports from both a player and systems perspective. I am drawn to
+                    spaces where creativity and structure meet, and I hope to build a career that lets me use
+                    data, design, and systems thinking to improve products, services, and human experiences.
+                </p>
             </div>
         </section>
     </main>
