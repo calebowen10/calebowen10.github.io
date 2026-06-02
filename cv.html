@@ -21,7 +21,7 @@
         header {
             background-color: white;
             padding: 1.5rem 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -72,7 +72,7 @@
             background: white;
             padding: 3rem;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
         }
 
         .sidebar {
@@ -99,6 +99,7 @@
             font-weight: 400;
             color: #666;
             margin-bottom: 1.5rem;
+            line-height: 1.5;
         }
 
         .sidebar p {
@@ -111,10 +112,12 @@
         .contact-info {
             text-align: left;
             margin-top: 2rem;
+            border-top: 1px solid #eee;
+            padding-top: 1.5rem;
         }
 
         .contact-info p {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
             font-size: 0.9rem;
         }
 
@@ -133,8 +136,14 @@
 
         .cv-content h1 {
             font-size: 2rem;
-            margin-bottom: 2rem;
+            margin-bottom: 0.75rem;
             color: #333;
+        }
+
+        .summary {
+            color: #555;
+            margin-bottom: 2rem;
+            line-height: 1.8;
         }
 
         .cv-content h2 {
@@ -142,10 +151,12 @@
             margin-top: 2.5rem;
             margin-bottom: 1rem;
             color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.35rem;
         }
 
         .cv-item {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.35rem;
         }
 
         .cv-item h3 {
@@ -167,37 +178,50 @@
             margin-bottom: 0.3rem;
         }
 
-        .cv-item .honor {
-            font-style: italic;
-            color: #666;
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 0.5rem;
+        }
+
+        .skill {
+            background: #f0f5fa;
+            color: #355f83;
+            padding: 0.35rem 0.7rem;
+            border-radius: 20px;
             font-size: 0.9rem;
         }
 
-        .cv-item a {
-            color: #5b9bd5;
-            text-decoration: none;
-        }
-
-        .cv-item a:hover {
-            text-decoration: underline;
-        }
-
         @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
             .cv-section {
                 grid-template-columns: 1fr;
                 gap: 2rem;
+                padding: 2rem;
             }
 
             .cv-content {
                 padding-left: 0;
             }
 
-            .nav-links {
-                gap: 1rem;
+            .contact-info {
+                text-align: center;
             }
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav>
@@ -215,38 +239,54 @@
         <section class="cv-section">
             <aside class="sidebar">
                 <img src="My headshot.jpeg" alt="Caleb Owen" class="profile-img">
+
                 <h1>Caleb Owen</h1>
-                <h2>Graduate Research Assistant at<br>the University of Connecticut</h2>
-                <p>Data Analyst and PhD Student in Psychology, based in CT.</p>
+
+                <h2>
+                    Industrial Engineering<br>
+                    Product & Systems Analytics
+                </h2>
+
+                <p>
+                    Behavioral science graduate building toward
+                    product analytics, operations, quality improvement, and human-centered technology.
+                </p>
                 
                 <div class="contact-info">
-                    <p>📧 caleb.owen@uconn.edu</p>
-                    <p>📍 New Haven, CT</p>
-                    <p>💻 <a href="https://github.com/calebowen10/">Github</a></p>
+                    <p>📧 <a href="mailto:owencaleb1126@gmail.com">owencaleb1126@gmail.com</a></p>
+                    <p>📍 Connecticut / Greater Boston</p>
+                    <p>💻 <a href="https://github.com/calebowen10/">GitHub</a></p>
+                    <p>🔗 <a href="https://www.linkedin.com/in/calebowenm/">LinkedIn</a></p>
                 </div>
             </aside>
 
             <div class="cv-content">
                 <h1>Curriculum Vitae</h1>
 
+                <p class="summary">
+                    I bring together behavioral science, healthcare quality improvement, data analytics,
+                    and systems thinking. My current direction is data analytics engineering, industrial
+                    engineering, product analytics, operations, live service systems, and systems improvement.
+                </p>
+
                 <h2>Positions</h2>
                 
                 <div class="cv-item">
-                    <h3>Graduate Research Assistant</h3>
+                    <h3>Research Assistant</h3>
                     <div class="organization">University of Connecticut, Dyscord Lab</div>
-                    <div class="date">August 2025 - present</div>
+                    <div class="date">August 2025 - January 2026</div>
                 </div>
 
                 <div class="cv-item">
-                    <h3>Data Fellow</h3>
+                    <h3>Data Analyst Fellow</h3>
                     <div class="organization">Child Health & Development Institute</div>
-                    <div class="date">June 2024 - August 2025</div>
+                    <div class="date">July 2024 - July 2025</div>
                 </div>
 
                 <div class="cv-item">
                     <h3>Teaching Assistant</h3>
                     <div class="organization">University of Connecticut, Department of Psychological Sciences</div>
-                    <div class="date">August 2025 - present</div>
+                    <div class="date">August 2025 - January 2026</div>
                 </div>
 
                 <div class="cv-item">
@@ -256,31 +296,33 @@
                 </div>
 
                 <div class="cv-item">
-                    <h3>Behavioral Technician</h3>
+                    <h3>Behavioral Data Technician</h3>
                     <div class="organization">Connecticut Behavioral Health</div>
-                    <div class="date">May 2023 - May 2024</div>
+                    <div class="date">May 2023 - Present</div>
                 </div>
 
                 <h2>Education</h2>
+
+                <div class="cv-item">
+                    <h3>M.S., Industrial Engineering</h3>
+                    <div class="organization">Northeastern University</div>
+                    <div class="date">Expected 2028</div>
+                </div>
                 
                 <div class="cv-item">
-                    <h3>Ph.D., Experimental Psychology</h3>
-                    <div class="organization">University of Connecticut</div>
-                    <div class="date">In progress (started August 2025)</div>
-                </div>
 
                 <div class="cv-item">
                     <h3>B.A., Psychological Sciences</h3>
                     <div class="organization">University of Connecticut</div>
-                    <div class="date">May 2024</div>
+                    <div class="date">Class of 2024</div>
                 </div>
 
                 <h2>Research Experience</h2>
 
                 <div class="cv-item">
-                    <h3>Graduate Research Assistant</h3>
+                    <h3>Research Assistant</h3>
                     <div class="organization">University of Connecticut, Dyscord Lab</div>
-                    <div class="date">August 2025 - present</div>
+                    <div class="date">August 2025 - January 2026</div>
                 </div>
 
                 <div class="cv-item">
@@ -292,13 +334,13 @@
                 <div class="cv-item">
                     <h3>Undergraduate Research Assistant</h3>
                     <div class="organization">University of Connecticut, Condon Lab</div>
-                    <div class="date">September 2023 - May 2024</div>
+                    <div class="date">August 2023 - May 2024</div>
                 </div>
 
                 <div class="cv-item">
                     <h3>Undergraduate Research Assistant</h3>
                     <div class="organization">University of Connecticut, EMPOWER Lab</div>
-                    <div class="date">September 2022 - December 2024</div>
+                    <div class="date">October 2022 - May 2024</div>
                 </div>
 
                 <h2>Teaching Experience</h2>
@@ -306,7 +348,7 @@
                 <div class="cv-item">
                     <h3>PSYC 1100 Lab Instructor</h3>
                     <div class="organization">University of Connecticut</div>
-                    <div class="date">August 2025 - present</div>
+                    <div class="date">August 2025 - January 2026</div>
                 </div>
 
                 <div class="cv-item">
@@ -319,6 +361,22 @@
                     <h3>First Year Mentor</h3>
                     <div class="organization">University of Connecticut, First Year Experience Program</div>
                     <div class="date">August 2022 - December 2022</div>
+                </div>
+
+                <h2>Technical Skills</h2>
+
+                <div class="cv-item">
+                    <h3>Tools & Methods</h3>
+                    <div class="skills-list">
+                        <span class="skill">Python</span>
+                        <span class="skill">R</span>
+                        <span class="skill">SQL</span>
+                        <span class="skill">Power BI</span>
+                        <span class="skill">Excel</span>
+                        <span class="skill">SPSS</span>
+                        <span class="skill">Product Analytics</span>
+                        <span class="skill">Operations Analytics</span>
+                    </div>
                 </div>
 
             </div>
