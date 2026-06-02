@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caleb Owen - Projects</title>
+    <title>Caleb Owen - Work & Project Roadmap</title>
     <style>
         * {
             margin: 0;
@@ -21,7 +21,7 @@
         header {
             background-color: white;
             padding: 1.5rem 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -72,7 +72,7 @@
             background: white;
             padding: 3rem;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
         }
 
         .sidebar {
@@ -99,6 +99,7 @@
             font-weight: 400;
             color: #666;
             margin-bottom: 1.5rem;
+            line-height: 1.5;
         }
 
         .sidebar p {
@@ -111,10 +112,12 @@
         .contact-info {
             text-align: left;
             margin-top: 2rem;
+            border-top: 1px solid #eee;
+            padding-top: 1.5rem;
         }
 
         .contact-info p {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
             font-size: 0.9rem;
         }
 
@@ -133,41 +136,75 @@
 
         .content h1 {
             font-size: 2rem;
-            margin-bottom: 2rem;
+            margin-bottom: 0.75rem;
             color: #333;
+        }
+
+        .intro {
+            color: #555;
+            margin-bottom: 2rem;
+            line-height: 1.8;
         }
 
         .content h2 {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             margin-top: 2.5rem;
             margin-bottom: 1rem;
             color: #333;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.35rem;
         }
 
-        .content h3 {
+        .project-item {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .project-item:last-child {
+            border-bottom: none;
+        }
+
+        .project-item h3 {
             font-size: 1.1rem;
             font-weight: 600;
             color: #333;
-            margin-top: 2rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .status {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #355f83;
+            background: #f0f5fa;
+            padding: 0.25rem 0.6rem;
+            border-radius: 20px;
             margin-bottom: 0.8rem;
         }
 
-        .content p {
-            margin-bottom: 1.5rem;
+        .project-item p {
+            margin-bottom: 1rem;
             line-height: 1.8;
             color: #555;
         }
 
-        .content a {
-            color: #5b9bd5;
-            text-decoration: none;
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
-        .content a:hover {
-            text-decoration: underline;
+        .tag {
+            background: #f7f7f7;
+            color: #555;
+            padding: 0.3rem 0.65rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid #e8e8e8;
         }
 
-        .overview-box {
+        .note-box {
             background-color: #f9f9f9;
             border-left: 4px solid #5b9bd5;
             padding: 1.5rem;
@@ -175,40 +212,41 @@
             border-radius: 4px;
         }
 
-        .overview-box p {
-            margin-bottom: 0.8rem;
+        .note-box p {
+            margin-bottom: 0;
             color: #555;
             line-height: 1.8;
         }
 
-        .overview-box p:last-child {
-            margin-bottom: 0;
-        }
-
-        .project-item {
-            margin-bottom: 2.5rem;
-        }
-
-        .project-item h3 {
-            margin-top: 0;
-        }
-
         @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
             .projects-section {
                 grid-template-columns: 1fr;
                 gap: 2rem;
+                padding: 2rem;
             }
 
             .content {
                 padding-left: 0;
             }
 
-            .nav-links {
-                gap: 1rem;
+            .contact-info {
+                text-align: center;
             }
         }
     </style>
 </head>
+
 <body>
     <header>
         <nav>
@@ -216,7 +254,7 @@
             <ul class="nav-links">
                 <li><a href="index.html">About</a></li>
                 <li><a href="cv.html">CV</a></li>
-                <li><a href="projects.html">Projects</a></li>
+                <li><a href="projects.html">Work & Roadmap</a></li>
                 <li><a href="contact.html">Contact Me</a></li>
             </ul>
         </nav>
@@ -226,46 +264,146 @@
         <section class="projects-section">
             <aside class="sidebar">
                 <img src="My headshot.jpeg" alt="Caleb Owen" class="profile-img">
+
                 <h1>Caleb Owen</h1>
-                <h2>Graduate Research Assistant at<br>the University of Connecticut</h2>
-                <p>Data Analyst and PhD Student in Psychology, based in CT.</p>
+
+                <h2>
+                    Data Analytics Engineering<br>
+                    Industrial Engineering<br>
+                    Product & Systems Analytics
+                </h2>
+
+                <p>
+                    Behavioral science graduate building toward data analytics engineering,
+                    product analytics, operations, quality improvement, and human-centered technology.
+                </p>
                 
                 <div class="contact-info">
-                    <p>📧 caleb.owen@uconn.edu</p>
-                    <p>📍 New Haven, CT</p>
-                    <p>💻 <a href="https://github.com/calebowen10/">Github</a></p>
+                    <p>📧 <a href="mailto:calebowen1126@gmail.com">calebowen1126@gmail.com</a></p>
+                    <p>📍 Connecticut / Greater Boston</p>
+                    <p>💻 <a href="https://github.com/calebowen10/">GitHub</a></p>
+                    <p>🔗 <a href="https://www.linkedin.com/in/calebowen1126/">LinkedIn</a></p>
                 </div>
             </aside>
 
             <div class="content">
-                <h1>Projects</h1>
-              <h2>Machine Learning Projects</h2>
+                <h1>Work & Project Roadmap</h1>
 
-                <div class="project-item">
-                    <h3>Predictive Models for Student Success (upcoming)</h3>
-                    <p>I'm exploring how data science and statistics can be used to detect early warning signs of academic struggle. The project applies causal inference and machine learning to educational datasets, with a focus on identifying inequities across student groups. The long-term goal is to help design adaptive interventions that make classrooms more inclusive and supportive.</p>
-                </div>
-              
-                <h2>Academic Research Overview</h2>
-                <div class="overview-box">
-                    <p>I explore how people learn, coordinate, and perform in complex social systems, particularly in education and mental health contexts. I ask: <strong>What drives success, equity, and sustained engagement?</strong></p>
-                    
-                    <p>To answer that, I leverage statistics, causal inference, machine learning, and reproducible engineering. Across projects, my goal is to produce tools and insights that translate evidence into action—improving decisions, systems, and outcomes.</p>
-                </div>
+                <p class="intro">
+                    This page highlights the technical direction I am building toward: data analytics engineering,
+                    industrial engineering, product analytics, operations, and human-centered systems work.
+                    Some projects are completed, while others are in progress or planned as portfolio case studies.
+                </p>
 
-                <div class="project-item">
-                    <h3>Crowd Synchrony & Team Performance (early-stage idea)</h3>
-                    <p>Exploring how coordinated crowd behaviors—like chanting, cheering, or moving together—affect player performance in sports. I'm interested in whether the crowd drives performance shifts, or simply mirrors them. Future work may compare different sports (soccer, hockey, baseball) to see how interruptions and rhythms shape collective energy.</p>
+                <div class="note-box">
+                    <p>
+                        My goal is to build projects that show more than code. I want each project to show a clear problem,
+                        a useful workflow, a decision-making output, and the connection between data, systems, and people.
+                    </p>
                 </div>
 
+                <h2>Current and Recent Work</h2>
+
                 <div class="project-item">
-                    <h3>Open Science & Reproducibility Pipelines</h3>
-                    <p>Developing reproducible workflows to clean, analyze, and visualize behavioral and educational datasets. This project showcases how open methods can turn raw data into transparent, shareable insights.</p>
+                    <h3>Healthcare Quality Improvement Analytics</h3>
+                    <span class="status">Professional experience</span>
+                    <p>
+                        Data cleaning, reporting, dashboarding, and quality improvement work connected to behavioral health
+                        service systems. This work shaped my interest in turning messy operational data into usable insights
+                        for teams, providers, and stakeholders.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Power BI</span>
+                        <span class="tag">Excel</span>
+                        <span class="tag">SPSS</span>
+                        <span class="tag">Quality Improvement</span>
+                        <span class="tag">Healthcare Analytics</span>
+                    </div>
+                </div>
+
+                <h2>Projects in Progress</h2>
+
+                <div class="project-item">
+                    <h3>NYC 311 Lakehouse Pipeline</h3>
+                    <span class="status">In progress</span>
+                    <p>
+                        A data engineering project using public service request data to practice ingestion, cleaning,
+                        storage, transformation, and querying. The goal is to show reproducible pipeline design and
+                        analytics-ready data modeling.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Pandas</span>
+                        <span class="tag">Parquet</span>
+                        <span class="tag">DuckDB</span>
+                        <span class="tag">Data Engineering</span>
+                    </div>
                 </div>
 
                 <div class="project-item">
-                    <h3>Motivation & Learning Analytics</h3>
-                    <p>Using predictive modeling to study what drives student success across contexts. Questions I'm asking include: How do group roles and identity affect cooperation? When does synchrony help or hurt collaboration? Can adaptive AI tools foster more inclusive and effective classrooms?</p>
+                    <h3>Live-Ops / Product Analytics Dashboard</h3>
+                    <span class="status">Planned case study</span>
+                    <p>
+                        A dashboard concept for tracking product or game health through engagement, retention, incidents,
+                        feature usage, and operational response. This project connects my interest in gaming and product
+                        teams with analytics that support live service decision-making.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Product Analytics</span>
+                        <span class="tag">Live Operations</span>
+                        <span class="tag">Retention</span>
+                        <span class="tag">Engagement Metrics</span>
+                        <span class="tag">Dashboarding</span>
+                    </div>
+                </div>
+
+                <h2>Upcoming Portfolio Ideas</h2>
+
+                <div class="project-item">
+                    <h3>Operations Analytics Simulation</h3>
+                    <span class="status">Upcoming</span>
+                    <p>
+                        A project focused on queueing, capacity, throughput, staffing, or service operations. This would
+                        connect my industrial engineering direction with practical analytics for improving system flow.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Industrial Engineering</span>
+                        <span class="tag">Operations</span>
+                        <span class="tag">Simulation</span>
+                        <span class="tag">Process Improvement</span>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <h3>Gaming Economy or Player Behavior Analysis</h3>
+                    <span class="status">Upcoming</span>
+                    <p>
+                        A product analytics project using game-like data to examine player behavior, progression,
+                        engagement, churn risk, or in-game economy patterns. This would help position my portfolio
+                        for gaming, product, and live service analytics roles.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">Gaming Analytics</span>
+                        <span class="tag">User Behavior</span>
+                        <span class="tag">Churn</span>
+                        <span class="tag">Product Metrics</span>
+                    </div>
+                </div>
+
+                <div class="project-item">
+                    <h3>Learning and Motivation Analytics</h3>
+                    <span class="status">Future research-to-product bridge</span>
+                    <p>
+                        A project connecting my psychology background to education technology, user behavior, and adaptive
+                        systems. The goal would be to study motivation, engagement, and learning outcomes through a more
+                        product-facing analytics lens.
+                    </p>
+                    <div class="tags">
+                        <span class="tag">EdTech</span>
+                        <span class="tag">Behavioral Science</span>
+                        <span class="tag">Learning Analytics</span>
+                        <span class="tag">Human-Centered Data</span>
+                    </div>
                 </div>
 
             </div>
