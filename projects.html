@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caleb Owen - Work & Project Roadmap</title>
+
+    <title>Caleb Owen - Projects</title>
+
     <style>
         * {
             margin: 0;
@@ -11,17 +13,23 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: #333;
             background-color: #f5f5f5;
         }
 
+        /* -------------------- NAVIGATION -------------------- */
+
         header {
             background-color: white;
             padding: 1.5rem 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -52,12 +60,15 @@
             text-decoration: none;
             color: #666;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: color 0.2s ease;
         }
 
-        .nav-links a:hover {
+        .nav-links a:hover,
+        .nav-links a.active {
             color: #5b9bd5;
         }
+
+        /* -------------------- MAIN LAYOUT -------------------- */
 
         main {
             max-width: 1200px;
@@ -72,8 +83,10 @@
             background: white;
             padding: 3rem;
             border-radius: 8px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
         }
+
+        /* -------------------- SIDEBAR -------------------- */
 
         .sidebar {
             text-align: center;
@@ -102,7 +115,7 @@
             line-height: 1.5;
         }
 
-        .sidebar p {
+        .sidebar-description {
             font-size: 0.95rem;
             color: #666;
             margin-bottom: 1.5rem;
@@ -117,8 +130,9 @@
         }
 
         .contact-info p {
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.7rem;
             font-size: 0.9rem;
+            color: #666;
         }
 
         .contact-info a {
@@ -129,6 +143,8 @@
         .contact-info a:hover {
             text-decoration: underline;
         }
+
+        /* -------------------- CONTENT -------------------- */
 
         .content {
             padding-left: 2rem;
@@ -143,22 +159,38 @@
         .intro {
             color: #555;
             margin-bottom: 2rem;
-            line-height: 1.8;
+            line-height: 1.85;
+            max-width: 800px;
         }
 
         .content h2 {
-            font-size: 1.35rem;
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            margin-top: 2.75rem;
+            margin-bottom: 1.25rem;
             color: #333;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 0.35rem;
+            border-bottom: 1px solid #e8e8e8;
+            padding-bottom: 0.45rem;
         }
 
-        .project-item {
+        .note-box {
+            background-color: #f9f9f9;
+            border-left: 4px solid #5b9bd5;
+            padding: 1.4rem 1.5rem;
             margin-bottom: 2rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .note-box p {
+            margin: 0;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        /* -------------------- PROJECTS -------------------- */
+
+        .project-item {
+            margin-bottom: 3rem;
+            padding-bottom: 2.5rem;
+            border-bottom: 1px solid #eeeeee;
         }
 
         .project-item:last-child {
@@ -166,33 +198,102 @@
         }
 
         .project-item h3 {
-            font-size: 1.1rem;
+            font-size: 1.25rem;
             font-weight: 600;
             color: #333;
-            margin-bottom: 0.35rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-subtitle {
+            color: #777;
+            font-size: 0.92rem;
+            margin-bottom: 0.75rem;
         }
 
         .status {
             display: inline-block;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 600;
             color: #355f83;
             background: #f0f5fa;
             padding: 0.25rem 0.6rem;
             border-radius: 20px;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
         }
 
         .project-item p {
             margin-bottom: 1rem;
-            line-height: 1.8;
+            line-height: 1.85;
             color: #555;
         }
+
+        .project-item strong {
+            color: #333;
+        }
+
+        /* -------------------- METRICS -------------------- */
+
+        .project-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .metric {
+            background: #fafafa;
+            border: 1px solid #e7e7e7;
+            padding: 1rem;
+        }
+
+        .metric-value {
+            display: block;
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.2;
+        }
+
+        .metric-label {
+            display: block;
+            font-size: 0.78rem;
+            color: #777;
+            margin-top: 0.35rem;
+            line-height: 1.35;
+        }
+
+        /* -------------------- KEY FINDINGS -------------------- */
+
+        .findings {
+            margin: 1.5rem 0;
+            padding: 1.25rem 1.4rem;
+            background: #fafafa;
+            border: 1px solid #e8e8e8;
+        }
+
+        .findings h4 {
+            font-size: 1rem;
+            margin-bottom: 0.65rem;
+            color: #333;
+        }
+
+        .findings ul {
+            padding-left: 1.2rem;
+            color: #555;
+        }
+
+        .findings li {
+            margin-bottom: 0.45rem;
+            line-height: 1.65;
+        }
+
+        /* -------------------- TAGS -------------------- */
 
         .tags {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
+            margin-top: 1.2rem;
         }
 
         .tag {
@@ -200,22 +301,70 @@
             color: #555;
             padding: 0.3rem 0.65rem;
             border-radius: 20px;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             border: 1px solid #e8e8e8;
         }
 
-        .note-box {
-            background-color: #f9f9f9;
-            border-left: 4px solid #5b9bd5;
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-            border-radius: 4px;
+        /* -------------------- LINKS / BUTTONS -------------------- */
+
+        .project-actions {
+            margin-top: 1.4rem;
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
         }
 
-        .note-box p {
-            margin-bottom: 0;
+        .project-link {
+            display: inline-block;
+            padding: 0.55rem 0.9rem;
+            background: #333;
+            color: white;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            border: 1px solid #333;
+            transition: opacity 0.2s ease;
+        }
+
+        .project-link.secondary {
+            color: #333;
+            background: white;
+        }
+
+        .project-link:hover {
+            opacity: 0.8;
+        }
+
+        /* -------------------- PROJECT WORKFLOW -------------------- */
+
+        .workflow {
+            margin: 1.5rem 0;
+            padding: 1.2rem;
+            background: #fafafa;
+            border: 1px solid #e8e8e8;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 0.85rem;
             color: #555;
-            line-height: 1.8;
+            overflow-x: auto;
+        }
+
+        /* -------------------- RESPONSIVE -------------------- */
+
+        @media (max-width: 900px) {
+            .projects-section {
+                grid-template-columns: 240px 1fr;
+                gap: 2rem;
+                padding: 2rem;
+            }
+
+            .profile-img {
+                width: 170px;
+                height: 170px;
+            }
+
+            .project-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         @media (max-width: 768px) {
@@ -230,10 +379,15 @@
                 justify-content: center;
             }
 
+            main {
+                margin: 1.5rem auto;
+                padding: 0 1rem;
+            }
+
             .projects-section {
                 grid-template-columns: 1fr;
                 gap: 2rem;
-                padding: 2rem;
+                padding: 1.5rem;
             }
 
             .content {
@@ -243,169 +397,724 @@
             .contact-info {
                 text-align: center;
             }
+
+            .project-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .project-metrics {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 
 <body>
+
     <header>
         <nav>
             <div class="logo">Caleb Owen</div>
+
             <ul class="nav-links">
                 <li><a href="index.html">About</a></li>
                 <li><a href="cv.html">CV</a></li>
-                <li><a href="projects.html">Work & Roadmap</a></li>
+                <li><a href="projects.html" class="active">Projects</a></li>
                 <li><a href="contact.html">Contact Me</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
+
         <section class="projects-section">
+
+            <!-- ==================== SIDEBAR ==================== -->
+
             <aside class="sidebar">
-                <img src="My headshot.jpeg" alt="Caleb Owen" class="profile-img">
+
+                <img
+                    src="My headshot.jpeg"
+                    alt="Caleb Owen"
+                    class="profile-img"
+                >
 
                 <h1>Caleb Owen</h1>
 
                 <h2>
                     Industrial Engineering<br>
-                    Product & Systems Analytics
+                    Data & Systems Analytics
                 </h2>
 
-                <p>
-                    Behavioral science graduate building toward product analytics, operations, quality improvement, and human-centered technology.
+                <p class="sidebar-description">
+                    Industrial engineering graduate student working across
+                    data engineering, project controls, healthcare analytics,
+                    systems improvement, and applied research.
                 </p>
-                
+
                 <div class="contact-info">
-                    <p>📧 <a href="mailto:calebowen1126@gmail.com">owencaleb1126@gmail.com</a></p>
-                    <p>📍 Connecticut / Greater Boston</p>
-                    <p>💻 <a href="https://github.com/calebowen10/">GitHub</a></p>
-                    <p>🔗 <a href="https://www.linkedin.com/in/calebowen1126/">LinkedIn</a></p>
+
+                    <p>
+                        📧
+                        <a href="mailto:owencaleb1126@gmail.com">
+                            owencaleb1126@gmail.com
+                        </a>
+                    </p>
+
+                    <p>📍 Boston, MA</p>
+
+                    <p>
+                        💻
+                        <a
+                            href="https://github.com/calebowen10/"
+                            target="_blank"
+                        >
+                            GitHub
+                        </a>
+                    </p>
+
+                    <p>
+                        🌐
+                        <a
+                            href="https://calebowen10.github.io/index.html"
+                            target="_blank"
+                        >
+                            Portfolio
+                        </a>
+                    </p>
+
+                    <p>
+                        🔗
+                        <a
+                            href="https://www.linkedin.com/in/calebowenm/"
+                            target="_blank"
+                        >
+                            LinkedIn
+                        </a>
+                    </p>
+
                 </div>
+
             </aside>
 
+            <!-- ==================== MAIN CONTENT ==================== -->
+
             <div class="content">
-                <h1>Work & Project Roadmap</h1>
+
+                <h1>Projects</h1>
 
                 <p class="intro">
-                    This page highlights the technical direction I am building toward: data analytics engineering,
-                    industrial engineering, product analytics, operations, and human-centered systems work.
-                    Some projects are completed, while others are in progress or planned as portfolio case studies.
+                    My project work sits at the intersection of industrial engineering,
+                    data systems, operations, research, and decision support. I am
+                    particularly interested in building systems that take complex or
+                    fragmented information and turn it into something that can actually
+                    support engineering, operational, or organizational decisions.
                 </p>
 
                 <div class="note-box">
                     <p>
-                        My goal is to build projects that show more than code. I want each project to show a clear problem,
-                        a useful workflow, a decision-making output, and the connection between data, systems, and people.
+                        These projects are intentionally different from one another.
+                        Together they demonstrate project controls, machine learning,
+                        data engineering, statistical analysis, quality improvement,
+                        and systems thinking across infrastructure, manufacturing,
+                        municipal services, and healthcare.
                     </p>
                 </div>
 
-                <h2>Current and Recent Work</h2>
+                <!-- ========================================================= -->
+                <!-- WATER CAPITAL PROJECT -->
+                <!-- ========================================================= -->
 
-                <div class="project-item">
-                    <h3>Healthcare Quality Improvement Analytics</h3>
-                    <span class="status">Professional experience</span>
-                    <p>
-                        Data cleaning, reporting, dashboarding, and quality improvement work connected to behavioral health
-                        service systems. This work shaped my interest in turning messy operational data into usable insights
-                        for teams, providers, and stakeholders.
-                    </p>
-                    <div class="tags">
-                        <span class="tag">Power BI</span>
-                        <span class="tag">Excel</span>
-                        <span class="tag">SPSS</span>
-                        <span class="tag">Quality Improvement</span>
-                        <span class="tag">Healthcare Analytics</span>
+                <h2>Industrial Engineering & Project Controls</h2>
+
+                <article class="project-item">
+
+                    <h3>
+                        Municipal Water Infrastructure Capital Improvement Program
+                    </h3>
+
+                    <div class="project-subtitle">
+                        Project Controls, Earned Value, Cost Forecasting & Schedule Analysis
                     </div>
-                </div>
 
-                <h2>Projects in Progress</h2>
+                    <span class="status">
+                        Completed Portfolio Case Study · 2026
+                    </span>
 
-                <div class="project-item">
-                    <h3>NYC 311 Lakehouse Pipeline</h3>
-                    <span class="status">In progress</span>
                     <p>
-                        A data engineering project using public service request data to practice ingestion, cleaning,
-                        storage, transformation, and querying. The goal is to show reproducible pipeline design and
-                        analytics-ready data modeling.
+                        I developed this project to simulate the management environment
+                        behind a large municipal infrastructure capital program. The
+                        fictional Harborview Water & Sewer Department is responsible for
+                        delivering 12 water infrastructure projects within a
+                        <strong>$96.0 million approved program envelope</strong>.
+                        Of that amount, $88.5 million is assigned to baselined project
+                        work and $7.5 million is retained as program contingency.
                     </p>
-                    <div class="tags">
-                        <span class="tag">Python</span>
-                        <span class="tag">Pandas</span>
-                        <span class="tag">Parquet</span>
-                        <span class="tag">DuckDB</span>
-                        <span class="tag">Data Engineering</span>
+
+                    <p>
+                        The goal was not to perform civil engineering design. Instead,
+                        I wanted to model the industrial engineering and project-controls
+                        problem behind infrastructure delivery: how program leadership
+                        can monitor scope, schedule, cost, risk, procurement,
+                        contractors, milestones, resources, changes, and forecast
+                        performance across multiple projects at once.
+                    </p>
+
+                    <p>
+                        I developed the program's work breakdown structure, cost
+                        architecture, control accounts, work packages, and a
+                        <strong>428-activity baseline schedule</strong>. I then connected
+                        planned schedule performance to a cost-loaded Earned Value
+                        Management framework capable of tracking Planned Value (PV),
+                        Earned Value (EV), Actual Cost (AC), Cost Performance Index
+                        (CPI), Schedule Performance Index (SPI), Estimate at Completion
+                        (EAC), and Variance at Completion (VAC).
+                    </p>
+
+                    <div class="workflow">
+                        Program Definition → WBS → Baseline Schedule → Cost Model →
+                        Earned Value → Forecasting → Scenario Analysis → Executive Decision Support
                     </div>
-                </div>
 
-                <div class="project-item">
-                    <h3>Live-Ops / Product Analytics Dashboard</h3>
-                    <span class="status">Planned case study</span>
-                    <p>
-                        A dashboard concept for tracking product or game health through engagement, retention, incidents,
-                        feature usage, and operational response. This project connects my interest in gaming and product
-                        teams with analytics that support live service decision-making.
-                    </p>
-                    <div class="tags">
-                        <span class="tag">Product Analytics</span>
-                        <span class="tag">Live Operations</span>
-                        <span class="tag">Retention</span>
-                        <span class="tag">Engagement Metrics</span>
-                        <span class="tag">Dashboarding</span>
+                    <div class="project-metrics">
+
+                        <div class="metric">
+                            <span class="metric-value">$96.0M</span>
+                            <span class="metric-label">
+                                Approved Program Envelope
+                            </span>
+                        </div>
+
+                        <div class="metric">
+                            <span class="metric-value">12</span>
+                            <span class="metric-label">
+                                Capital Projects
+                            </span>
+                        </div>
+
+                        <div class="metric">
+                            <span class="metric-value">428</span>
+                            <span class="metric-label">
+                                Baseline Schedule Activities
+                            </span>
+                        </div>
+
+                        <div class="metric">
+                            <span class="metric-value">$7.5M</span>
+                            <span class="metric-label">
+                                Program Contingency
+                            </span>
+                        </div>
+
                     </div>
-                </div>
 
-                <h2>Upcoming Portfolio Ideas</h2>
-
-                <div class="project-item">
-                    <h3>Operations Analytics Simulation</h3>
-                    <span class="status">Upcoming</span>
                     <p>
-                        A project focused on queueing, capacity, throughput, staffing, or service operations. This would
-                        connect my industrial engineering direction with practical analytics for improving system flow.
+                        At the March 31, 2026 program status point, planned work had
+                        reached approximately <strong>$54.44 million</strong>, while
+                        earned value was approximately <strong>$53.05 million</strong>.
+                        Actual cost had reached approximately
+                        <strong>$57.70 million</strong>. The resulting program CPI of
+                        approximately <strong>0.92</strong> showed considerably more cost
+                        pressure than schedule pressure, while an SPI of approximately
+                        <strong>0.97</strong> indicated that the program remained
+                        relatively close to its planned schedule position.
                     </p>
+
+                    <p>
+                        Project-level forecasts produced an aggregate EAC of approximately
+                        <strong>$95.43 million</strong>. Although this exceeds the
+                        $88.5 million baselined project BAC, it remains just below the
+                        original $96 million total program funding envelope, meaning
+                        most of the original contingency would be consumed under the
+                        modeled forecast.
+                    </p>
+
+                    <div class="findings">
+
+                        <h4>Selected Findings</h4>
+
+                        <ul>
+                            <li>
+                                P05 showed the weakest modeled cost efficiency, with a CPI
+                                of approximately 0.86.
+                            </li>
+
+                            <li>
+                                P08 showed the greatest schedule pressure, with an SPI
+                                of approximately 0.80.
+                            </li>
+
+                            <li>
+                                P03, the treatment plant upgrade, represented the largest
+                                individual forecast exposure, with an EAC of roughly
+                                $22.49M against a $20.30M BAC.
+                            </li>
+
+                            <li>
+                                The overall program remained much closer to its schedule
+                                baseline than to its cost baseline, making cost control
+                                the more immediate portfolio-level management issue.
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <p>
+                        I also incorporated schedule-recovery assumptions, commitment
+                        tracking, procurement exposure, and project-specific scenario
+                        assumptions. This allowed the model to move beyond historical
+                        reporting and instead answer management questions such as:
+                        Which projects require intervention? Which projects are driving
+                        forecast variance? How much contingency remains? Where are
+                        schedule risks concentrated? And which current commitments have
+                        not yet been incurred as actual cost?
+                    </p>
+
                     <div class="tags">
+
                         <span class="tag">Industrial Engineering</span>
-                        <span class="tag">Operations</span>
-                        <span class="tag">Simulation</span>
-                        <span class="tag">Process Improvement</span>
-                    </div>
-                </div>
+                        <span class="tag">Project Controls</span>
+                        <span class="tag">Earned Value Management</span>
+                        <span class="tag">Critical Path Method</span>
+                        <span class="tag">Cost Forecasting</span>
+                        <span class="tag">Schedule Analysis</span>
+                        <span class="tag">Risk Management</span>
+                        <span class="tag">Change Control</span>
+                        <span class="tag">Excel</span>
+                        <span class="tag">Python</span>
 
-                <div class="project-item">
-                    <h3>Gaming Economy or Player Behavior Analysis</h3>
-                    <span class="status">Upcoming</span>
-                    <p>
-                        A product analytics project using game-like data to examine player behavior, progression,
-                        engagement, churn risk, or in-game economy patterns. This would help position my portfolio
-                        for gaming, product, and live service analytics roles.
-                    </p>
-                    <div class="tags">
-                        <span class="tag">Gaming Analytics</span>
-                        <span class="tag">User Behavior</span>
-                        <span class="tag">Churn</span>
-                        <span class="tag">Product Metrics</span>
                     </div>
-                </div>
 
-                <div class="project-item">
-                    <h3>Learning and Motivation Analytics</h3>
-                    <span class="status">Future research-to-product bridge</span>
-                    <p>
-                        A project connecting my psychology background to education technology, user behavior, and adaptive
-                        systems. The goal would be to study motivation, engagement, and learning outcomes through a more
-                        product-facing analytics lens.
-                    </p>
-                    <div class="tags">
-                        <span class="tag">EdTech</span>
-                        <span class="tag">Behavioral Science</span>
-                        <span class="tag">Learning Analytics</span>
-                        <span class="tag">Human-Centered Data</span>
+                    <div class="project-actions">
+
+                        <a
+                            href="water-capital.html"
+                            class="project-link"
+                        >
+                            View Full Case Study
+                        </a>
+
+                        <a
+                            href="https://github.com/calebowen10/water-capital-program-controls"
+                            target="_blank"
+                            class="project-link secondary"
+                        >
+                            View GitHub Repository
+                        </a>
+
                     </div>
-                </div>
+
+                </article>
+
+                <!-- ========================================================= -->
+                <!-- GEAR FAULT -->
+                <!-- ========================================================= -->
+
+                <h2>Machine Learning & Manufacturing</h2>
+
+                <article class="project-item">
+
+                    <h3>
+                        Gear Fault Diagnosis Using Kernel PCA & Fuzzy Neural Networks
+                    </h3>
+
+                    <div class="project-subtitle">
+                        Vibration-Based Fault Classification & Predictive Maintenance
+                    </div>
+
+                    <span class="status">
+                        Engineering Research Project · 2022
+                    </span>
+
+                    <p>
+                        This project examined how machine-learning methods can support
+                        mechanical fault diagnosis when only limited labeled examples
+                        of equipment failure are available. The problem is particularly
+                        relevant to predictive maintenance because real mechanical
+                        failures are often uncommon, expensive to reproduce, or unsafe
+                        to deliberately generate simply to create training data.
+                    </p>
+
+                    <p>
+                        Inspired by published work from Zhou and Tang, I implemented a
+                        fault-diagnosis workflow that combines
+                        <strong>Kernel Principal Component Analysis (KPCA)</strong>
+                        with a <strong>Fuzzy Neural Network (FNN)</strong>. The project
+                        used vibration information as the basis for distinguishing
+                        different gearbox operating and fault conditions.
+                    </p>
+
+                    <div class="workflow">
+                        Vibration Data → Feature Representation → Kernel PCA →
+                        Fuzzy Membership Functions → Neural Network →
+                        Fault Classification
+                    </div>
+
+                    <p>
+                        KPCA was used to transform nonlinear and correlated vibration
+                        information into a lower-dimensional feature space. This
+                        reduced the amount of information passed into the classifier
+                        while preserving the relationships most useful for separating
+                        operating conditions.
+                    </p>
+
+                    <p>
+                        The reduced feature representation was then passed into a fuzzy
+                        neural network. Rather than forcing every observation directly
+                        into a hard class boundary, the fuzzy architecture represents
+                        the degree to which an observation belongs to different learned
+                        fault patterns. This is valuable for machinery diagnosis because
+                        mechanical faults do not always produce perfectly distinct
+                        vibration signatures.
+                    </p>
+
+                    <p>
+                        The project gave me experience translating an academic engineering
+                        methodology into a complete analytical workflow that included
+                        feature processing, nonlinear dimensionality reduction, fuzzy
+                        reasoning, classification, and model interpretation. More broadly,
+                        it introduced me to the challenge of designing machine-learning
+                        systems for engineering environments where labeled data are much
+                        more constrained than they typically are in conventional analytics.
+                    </p>
+
+                    <div class="project-metrics">
+
+                        <div class="metric">
+                            <span class="metric-value">KPCA</span>
+                            <span class="metric-label">
+                                Nonlinear Feature Reduction
+                            </span>
+                        </div>
+
+                        <div class="metric">
+                            <span class="metric-value">FNN</span>
+                            <span class="metric-label">
+                                Fuzzy Neural Classification
+                            </span>
+                        </div>
+
+                        <div class="metric">
+                            <span class="metric-value">Vibration</span>
+                            <span class="metric-label">
+                                Condition Monitoring Data
+                            </span>
+                        </div>
+
+                        <div class="metric">
+                            <span class="metric-value">PdM</span>
+                            <span class="metric-label">
+                                Predictive Maintenance Application
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="tags">
+
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag">Kernel PCA</span>
+                        <span class="tag">Fuzzy Neural Networks</span>
+                        <span class="tag">Predictive Maintenance</span>
+                        <span class="tag">Vibration Analysis</span>
+                        <span class="tag">Fault Diagnosis</span>
+                        <span class="tag">Manufacturing</span>
+
+                    </div>
+
+                    <div class="project-actions">
+
+                        <a
+                            href="Caleb_Owen_Gear_Fault_Diagnosis_Project_Report.pdf"
+                            target="_blank"
+                            class="project-link"
+                        >
+                            View Technical Report
+                        </a>
+
+                    </div>
+
+                </article>
+
+                <!-- ========================================================= -->
+                <!-- NYC 311 -->
+                <!-- ========================================================= -->
+
+                <h2>Data Engineering</h2>
+
+                <article class="project-item">
+
+                    <h3>
+                        NYC 311 Service Requests - Lakehouse Pipeline
+                    </h3>
+
+                    <div class="project-subtitle">
+                        API Ingestion, Incremental ETL, Parquet & DuckDB
+                    </div>
+
+                    <span class="status">
+                        Data Engineering Project · 2026
+                    </span>
+
+                    <p>
+                        I built this project around NYC 311 service-request data to
+                        practice designing a repeatable analytical data system rather
+                        than performing a one-time notebook analysis. NYC 311 produces
+                        a large, continuously changing stream of operational records
+                        across agencies, complaint types, neighborhoods, and service
+                        categories.
+                    </p>
+
+                    <p>
+                        The objective was to create a pipeline that separated ingestion,
+                        cleaning, transformation, storage, validation, and analytics.
+                        Python workflows ingest records from the NYC Open Data API,
+                        standardize fields and types, process new records incrementally,
+                        and create structured analytical datasets.
+                    </p>
+
+                    <div class="workflow">
+                        NYC Open Data API → Python Ingestion → Validation →
+                        Incremental ETL → Parquet Storage → DuckDB →
+                        Analytics-Ready Data
+                    </div>
+
+                    <p>
+                        Processed records were stored in
+                        <strong>Parquet</strong> to provide compact columnar storage,
+                        while <strong>DuckDB</strong> provided a lightweight analytical
+                        query engine without requiring a separate database server.
+                        Data-quality checks were incorporated to identify missing IDs,
+                        malformed dates, duplicate records, inconsistent categories,
+                        and other issues that could affect downstream analysis.
+                    </p>
+
+                    <p>
+                        The result is a reproducible lakehouse-style workflow that can
+                        be rerun as additional service requests are added. Instead of
+                        repeatedly cleaning raw files before every analysis, the
+                        pipeline creates reusable analytical data that can support
+                        investigation of complaint volume, geography, agency workload,
+                        service categories, and changes in municipal demand over time.
+                    </p>
+
+                    <div class="tags">
+
+                        <span class="tag">Python</span>
+                        <span class="tag">DuckDB</span>
+                        <span class="tag">Parquet</span>
+                        <span class="tag">ETL</span>
+                        <span class="tag">API Ingestion</span>
+                        <span class="tag">Data Quality</span>
+                        <span class="tag">Data Modeling</span>
+                        <span class="tag">Municipal Analytics</span>
+
+                    </div>
+
+                    <div class="project-actions">
+
+                        <a
+                            href="https://github.com/calebowen10"
+                            target="_blank"
+                            class="project-link secondary"
+                        >
+                            View GitHub
+                        </a>
+
+                    </div>
+
+                </article>
+
+                <!-- ========================================================= -->
+                <!-- MATCH -->
+                <!-- ========================================================= -->
+
+                <h2>Healthcare Analytics & Research</h2>
+
+                <article class="project-item">
+
+                    <h3>
+                        MATCH-Conduct Treatment Outcomes
+                    </h3>
+
+                    <div class="project-subtitle">
+                        Statewide Behavioral Health Outcomes Analysis
+                    </div>
+
+                    <span class="status">
+                        Co-Authored Research · 2025–2026
+                    </span>
+
+                    <p>
+                        This research examined treatment completion and symptom outcomes
+                        among children and adolescents receiving the Conduct component
+                        of the Modular Approach to Therapy for Children with Anxiety,
+                        Depression, Trauma, or Conduct Problems (MATCH-ADTC) across
+                        Connecticut's statewide evidence-based treatment network.
+                    </p>
+
+                    <p>
+                        The analysis included <strong>788 children and adolescents
+                        ages 3–17</strong> whose primary MATCH protocol was Conduct.
+                        Logistic regression was used to examine factors associated with
+                        successful treatment completion, while linear regression was
+                        used to examine symptom severity at discharge.
+                    </p>
+
+                    <div class="project-metrics">
+
+                        <div class="metric">
+                            <span class="metric-value">788</span>
+                            <span class="metric-label">
+                                Youth Cases
+                            </span>
+                        </div>
+
+                        <div class="metric">
+                            <span class="metric-value">22</span>
+                            <span class="metric-label">
+                                Community Agencies
+                            </span>
+                        </div>
+
+                        <div class="metric">
+                            <span class="metric-value">3–17</span>
+                            <span class="metric-label">
+                                Participant Age Range
+                            </span>
+                        </div>
+
+                        <div class="metric">
+                            <span class="metric-value">2 Models</span>
+                            <span class="metric-label">
+                                Logistic & Linear Regression
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="findings">
+
+                        <h4>Selected Findings</h4>
+
+                        <ul>
+                            <li>
+                                Greater caregiver-reported symptom severity at intake
+                                was associated with lower odds of successful treatment
+                                completion.
+                            </li>
+
+                            <li>
+                                Youth with an Individualized Education Program (IEP)
+                                also showed lower odds of successful treatment completion.
+                            </li>
+
+                            <li>
+                                Greater initial symptom severity and co-occurring
+                                depression were associated with higher symptom severity
+                                at discharge.
+                            </li>
+
+                            <li>
+                                Treatment outcomes did not significantly differ by age,
+                                sex, race, or ethnicity in the analyzed sample.
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <p>
+                        The findings suggest that clinical complexity and educational
+                        support needs may help identify youth who require additional
+                        coordination during treatment. The project also strengthened my
+                        experience working at the intersection of data analysis,
+                        implementation science, healthcare quality, and real-world
+                        service systems.
+                    </p>
+
+                    <div class="tags">
+
+                        <span class="tag">Healthcare Analytics</span>
+                        <span class="tag">Implementation Science</span>
+                        <span class="tag">Logistic Regression</span>
+                        <span class="tag">Linear Regression</span>
+                        <span class="tag">Behavioral Health</span>
+                        <span class="tag">Outcomes Research</span>
+                        <span class="tag">Quality Improvement</span>
+
+                    </div>
+
+                </article>
+
+                <!-- ========================================================= -->
+                <!-- PROFESSIONAL ANALYTICS -->
+                <!-- ========================================================= -->
+
+                <h2>Professional Analytics Work</h2>
+
+                <article class="project-item">
+
+                    <h3>
+                        Statewide Behavioral Health Data & Quality Improvement
+                    </h3>
+
+                    <div class="project-subtitle">
+                        Child Health & Development Institute
+                    </div>
+
+                    <span class="status">
+                        Professional Experience
+                    </span>
+
+                    <p>
+                        My professional analytics work at the Child Health & Development
+                        Institute centered on improving the quality and usefulness of
+                        behavioral-health data submitted across a statewide provider
+                        network. I worked with information from
+                        <strong>18 provider organizations</strong>, each of which used
+                        different source structures, coding conventions, and reporting
+                        practices.
+                    </p>
+
+                    <p>
+                        I developed validation, cleaning, standardization, and reporting
+                        workflows that improved usable data completeness from
+                        approximately <strong>78% to 94%</strong> while reducing
+                        correction cycles and shortening recurring reporting timelines.
+                        I also supported analysis and reporting across tens of thousands
+                        of service records and dozens of operational indicators.
+                    </p>
+
+                    <p>
+                        This work shaped how I approach technical projects today:
+                        accurate analysis depends on the systems surrounding the data.
+                        Data definitions, process design, validation, documentation,
+                        stakeholder communication, and implementation all matter as much
+                        as the statistical or technical method itself.
+                    </p>
+
+                    <div class="tags">
+
+                        <span class="tag">Healthcare Analytics</span>
+                        <span class="tag">Data Quality</span>
+                        <span class="tag">Quality Improvement</span>
+                        <span class="tag">Python</span>
+                        <span class="tag">R</span>
+                        <span class="tag">Excel</span>
+                        <span class="tag">Power BI</span>
+                        <span class="tag">SPSS</span>
+                        <span class="tag">Stakeholder Reporting</span>
+
+                    </div>
+
+                </article>
 
             </div>
+
         </section>
+
     </main>
+
 </body>
 </html>
