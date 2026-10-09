@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Water Capital Program Command Center</title>
+
+<!-- Public CDN dependencies. If you host this on GitHub Pages, these load automatically. -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+
+<style>
+:root{
+    --nav:#3f2419;
+    --nav-mid:#6b3c28;
+    --nav-selected:#2d1912;
+    --accent:#b97b58;
+    --accent-light:#ead5c8;
+    --page:#f6f5f3;
+    --card:#ffffff;
+    --border:#ebe7e2;
+    --ink:#242424;
+    --muted:#707070;
+    --soft:#f3f1ee;
+    --good:#5f8f50;
+    --good-bg:#eaf3e8;
+    --watch:#c58a42;
+    --watch-bg:#fbf0df;
+    --bad:#c54c44;
+    --bad-bg:#fbe8e6;
+    --blue:#627f9a;
+    --shadow:0 2px 10px rgba(31,26,23,.055);
+}
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:"Segoe UI",Arial,sans-serif;
+    color:var(--ink);
+    background:var(--page);
+}
+button,select{font:inherit}
+.dashboard-shell{
+    display:grid;
+    grid-template-columns:190px minmax(0,1fr);
+    min-height:100vh;
+}
+.sidebar{
+    background:var(--nav);
+    padding:18px 14px 20px;
+    color:#fff;
+    position:sticky;
+    top:0;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+.brand{
+    width:100%;
+    height:122px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    margin-bottom:20px;
+}
+.brand-mark{
+    width:64px;height:64px;
+    border:2px solid rgba(255,255,255,.88);
+    border-radius:18px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:25px;font-weight:700;
+    letter-spacing:-1px;
+}
+.brand small{color:#d9c7bc;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.nav-btn{
+    width:100%;
+    border:0;
+    color:#fff;
+    background:var(--nav-mid);
+    margin:0 0 14px;
+    padding:17px 10px;
+    border-radius:4px;
+    cursor:pointer;
+    position:relative;
+    text-align:center;
+    font-size:14px;
+    transition:.15s ease;
+}
+.nav-btn:hover{background:#74432e}
+.nav-btn.active{background:var(--nav-selected)}
+.nav-btn.active:before{
+    content:"";
+    position:absolute;left:0;top:0;bottom:0;width:4px;
+    background:#de956b;border-radius:4px 0 0 4px;
+}
+.sidebar-divider{height:1px;background:#bb7655;margin:10px 0 24px}
+.filter-label{font-size:13px;font-weight:600;margin:0 0 8px}
+.sidebar select{
+    width:100%;
+    background:#fff;
+    color:#444;
+    border:1px solid #d8d2cd;
+    padding:8px 9px;
+    margin-bottom:17px;
+}
+.sidebar-footer{
+    margin-top:auto;
+    color:#e3d8d2;
+    font-size:12px;
+    line-height:1.55;
+}
+.sidebar-footer .bar{width:47px;height:4px;background:#d88f68;margin-top:15px}
+
+.main{min-width:0;padding:15px 18px 28px}
+.topbar{
+    height:72px;
+    background:#fff;
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    border-radius:12px 12px 4px 4px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    margin-bottom:20px;
+}
+.heading h1{font-size:24px;margin:0 0 2px;font-weight:650;letter-spacing:-.02em}
+.heading p{margin:0;color:var(--muted);font-size:15px}
+.top-actions{display:flex;align-items:center;gap:12px}
+.pill{
+    border:1px solid var(--border);
+    background:#fff;
+    border-radius:999px;
+    padding:8px 11px;
+    color:#555;
+    font-size:12px;
+}
+.reset-btn{
+    border:1px solid #dcd6d0;
+    background:#fff;
+    border-radius:7px;
+    padding:8px 11px;
+    cursor:pointer;
+    font-weight:600;
+}
+.reset-btn:hover{background:#f6f4f1}
+
+.page{display:none}
+.page.active{display:block}
+
+.kpi-grid{
+    display:grid;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:14px;
+    margin-bottom:16px;
+}
+.card,.panel{
+    background:var(--card);
+    border:1px solid var(--border);
+    box-shadow:var(--shadow);
+    border-radius:12px;
+}
+.kpi-card{padding:16px 15px 14px;min-height:128px}
+.kpi-title{font-size:13px;color:var(--muted);margin-bottom:6px}
+.kpi-value{font-size:27px;font-weight:650;letter-spacing:-.035em;margin-bottom:10px}
+.kpi-foot{display:flex;align-items:center;gap:7px;font-size:12px;color:#555}
+.badge{display:inline-block;padding:5px 8px;border-radius:6px;font-weight:600}
+.badge.good{color:var(--good);background:var(--good-bg)}
+.badge.watch{color:#b97725;background:var(--watch-bg)}
+.badge.bad{color:var(--bad);background:var(--bad-bg)}
+.badge.neutral{color:#555;background:#efefef}
+
+.performance-grid{
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    gap:16px;
+    margin-bottom:16px;
+}
+.panel{padding:16px}
+.panel-title{font-size:16px;font-weight:650;margin:0 0 2px}
+.panel-subtitle{font-size:12px;color:var(--muted);margin:0 0 12px}
+.chart-wrap{position:relative;height:310px}
+.chart-wrap.short{height:250px}
+.chart-wrap.tall{height:375px}
+
+.insight-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:12px;
+}
+.insight{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:15px;
+    min-height:119px;
+}
+.insight.good{background:#f6fbf4}
+.insight.bad{background:#fff5f4}
+.insight.info{background:#f4f7fb}
+.insight.watch{background:#fff9f2}
+.insight-label{font-size:13px;margin-bottom:6px;font-weight:600}
+.insight.good .insight-label{color:var(--good)}
+.insight.bad .insight-label{color:var(--bad)}
+.insight.info .insight-label{color:var(--blue)}
+.insight.watch .insight-label{color:#c27c32}
+.insight h3{font-size:18px;margin:0 0 6px}
+.insight p{font-size:12px;line-height:1.4;color:#555;margin:0}
+
+.bottom-grid{
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    gap:16px;
+}
+.metric-tabs{display:flex;gap:7px;margin:10px 0 12px;flex-wrap:wrap}
+.metric-tab{
+    border:1px solid #d9d5d0;background:#eee;color:#444;
+    padding:10px 15px;border-radius:4px;cursor:pointer;
+}
+.metric-tab.active{background:#182030;color:white;border-color:#182030}
+
+.score-grid{
+    display:grid;
+    grid-template-columns:1fr .9fr;
+    gap:16px;
+}
+.score-right{display:grid;gap:16px}
+.table-wrap{overflow:auto;max-height:420px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{
+    text-align:left;color:#777;font-size:10px;text-transform:uppercase;
+    letter-spacing:.04em;padding:10px 8px;background:#fafafa;
+    border-bottom:1px solid var(--border);position:sticky;top:0;
+}
+td{padding:10px 8px;border-bottom:1px solid #efefef;vertical-align:middle}
+td strong{font-size:12px}
+.project-sub{font-size:10px;color:#888;margin-top:2px}
+.progress-track{height:7px;background:#eee;border-radius:999px;overflow:hidden;min-width:90px}
+.progress-fill{height:100%;background:var(--accent);border-radius:999px}
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px}
+.status-dot.good{background:var(--good)}
+.status-dot.watch{background:var(--watch)}
+.status-dot.bad{background:var(--bad)}
+.status-dot.neutral{background:#aaa}
+
+.risk-grid{
+    display:grid;
+    grid-template-columns:.85fr 1.15fr;
+    gap:16px;
+}
+.risk-right{display:grid;gap:16px}
+.callout{
+    margin-top:14px;
+    border-left:4px solid var(--bad);
+    background:#fff6f5;
+    border-radius:8px;
+    padding:13px 14px;
+    font-size:12px;color:#555;line-height:1.5
+}
+
+.detail-header{
+    display:flex;justify-content:space-between;align-items:flex-end;gap:12px;
+    margin-bottom:14px
+}
+.detail-header select{
+    min-width:340px;padding:9px;border:1px solid #d8d2cd;background:white
+}
+.detail-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:16px
+}
+.detail-grid .full{grid-column:1/-1}
+.fact-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fact{
+    background:#faf9f7;border:1px solid var(--border);border-radius:8px;padding:11px
+}
+.fact span{display:block;color:#777;font-size:11px;margin-bottom:3px}
+.fact strong{font-size:13px}
+.narrative{
+    line-height:1.65;color:#555;font-size:13px
+}
+.loading{
+    padding:45px;text-align:center;color:#666;font-size:14px
+}
+.error{
+    display:none;background:#fff5f4;border:1px solid #f0c8c3;color:#8e332c;
+    border-radius:10px;padding:14px;margin-bottom:15px;font-size:13px
+}
+.disclaimer{
+    margin-top:16px;color:#858585;font-size:11px;line-height:1.5
+}
+@media(max-width:1200px){
+    .kpi-grid{grid-template-columns:repeat(3,1fr)}
+    .performance-grid,.bottom-grid,.score-grid,.risk-grid,.detail-grid{grid-template-columns:1fr}
+    .detail-grid .full{grid-column:auto}
+}
+@media(max-width:760px){
+    .dashboard-shell{grid-template-columns:1fr}
+    .sidebar{height:auto;position:relative;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    .brand,.sidebar-divider,.sidebar-footer{display:none}
+    .nav-btn{margin:0}
+    .main{padding:10px}
+    .topbar{height:auto;padding:14px;align-items:flex-start;gap:10px}
+    .heading h1{font-size:20px}
+    .top-actions{flex-direction:column;align-items:flex-end}
+    .kpi-grid{grid-template-columns:1fr 1fr}
+    .detail-header{align-items:stretch;flex-direction:column}
+    .detail-header select{min-width:0;width:100%}
+}
+</style>
+</head>
+
+<body>
+<div class="dashboard-shell">
+
+<aside class="sidebar">
+    <div class="brand">
+        <div class="brand-mark">HW</div>
+        <small>Harborview Water</small>
+    </div>
+
+    <button class="nav-btn active" data-page="performance">Performance</button>
+    <button class="nav-btn" data-page="scorecard">Scorecard</button>
+    <button class="nav-btn" data-page="risk">Risk &amp; Change</button>
+    <button class="nav-btn" data-page="detail">Project Detail</button>
+
+    <div class="sidebar-divider"></div>
+
+    <div>
+        <div class="filter-label">Project</div>
+        <select id="globalProject"><option value="ALL">All Projects</option></select>
+
+        <div class="filter-label">Project Status</div>
+        <select id="globalStatus">
+            <option value="ALL">All</option>
+        </select>
+    </div>
+
+    <div class="sidebar-footer">
+        Project controls<br>
+        Cost • Schedule • Forecast
+        <div class="bar"></div>
+    </div>
+</aside>
+
+<main class="main">
+    <header class="topbar">
+        <div class="heading">
+            <h1>Water Capital Program Command Center</h1>
+            <p id="pageSubtitle">Asset &amp; Project Controls Intelligence</p>
+        </div>
+        <div class="top-actions">
+            <div class="pill" id="statusDatePill">Status date: loading</div>
+            <button class="reset-btn" id="resetBtn">RESET</button>
+        </div>
+    </header>
+
+    <div class="error" id="errorBox"></div>
+    <div class="loading" id="loading">Loading live processed data from GitHub…</div>
+
+    <!-- PERFORMANCE -->
+    <section class="page active" id="page-performance">
+        <div class="kpi-grid" id="performanceKpis"></div>
+
+        <div class="performance-grid">
+            <div class="panel">
+                <h2 class="panel-title">Portfolio Cost &amp; Schedule Performance</h2>
+                <p class="panel-subtitle">Bubble size = project BAC · X = SPI · Y = CPI</p>
+                <div class="chart-wrap tall"><canvas id="performanceScatter"></canvas></div>
+            </div>
+
+            <div class="panel">
+                <h2 class="panel-title">Executive Narrative - Key Insights</h2>
+                <p class="panel-subtitle">Automatically derived from the current EVM snapshot</p>
+                <div class="insight-grid" id="insightGrid"></div>
+            </div>
+        </div>
+
+        <div class="bottom-grid">
+            <div class="panel">
+                <h2 class="panel-title">Forecast vs Baseline by Project</h2>
+                <p class="panel-subtitle">EAC compared with Budget at Completion</p>
+                <div class="chart-wrap"><canvas id="forecastChart"></canvas></div>
+            </div>
+            <div class="panel">
+                <h2 class="panel-title">Program EVM Trend</h2>
+                <p class="panel-subtitle">Cumulative Planned Value, Earned Value and Actual Cost</p>
+                <div class="chart-wrap"><canvas id="evmTrendChart"></canvas></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SCORECARD -->
+    <section class="page" id="page-scorecard">
+        <div class="kpi-grid" id="scoreKpis"></div>
+
+        <div class="score-grid">
+            <div class="panel">
+                <h2 class="panel-title">KPI vs Target Scorecard</h2>
+                <p class="panel-subtitle">Switch between cost, schedule and forecast performance</p>
+                <div class="metric-tabs">
+                    <button class="metric-tab active" data-metric="CPI">Cost Performance</button>
+                    <button class="metric-tab" data-metric="SPI">Schedule Performance</button>
+                    <button class="metric-tab" data-metric="EAC">Forecast</button>
+                    <button class="metric-tab" data-metric="VAC">Variance</button>
+                </div>
+                <div class="chart-wrap tall"><canvas id="scoreMainChart"></canvas></div>
+                <div class="callout" id="scoreRecommendation"></div>
+            </div>
+
+            <div class="score-right">
+                <div class="panel">
+                    <h2 class="panel-title">Project Performance vs Plan</h2>
+                    <p class="panel-subtitle">Selected KPI compared across active portfolio projects</p>
+                    <div class="chart-wrap short"><canvas id="scoreBarChart"></canvas></div>
+                </div>
+                <div class="panel">
+                    <h2 class="panel-title">Project Achievement</h2>
+                    <p class="panel-subtitle">Current snapshot through March 31, 2026</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Project</th><th>Earned</th><th>CPI</th><th>SPI</th><th>VAC</th><th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scoreTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RISK -->
+    <section class="page" id="page-risk">
+        <div class="kpi-grid" id="riskKpis"></div>
+        <div class="risk-grid">
+            <div class="panel">
+                <h2 class="panel-title">Forecast Exposure by Project</h2>
+                <p class="panel-subtitle">Negative VAC ranked from highest forecast exposure</p>
+                <div class="chart-wrap tall"><canvas id="riskParetoChart"></canvas></div>
+            </div>
+            <div class="risk-right">
+                <div class="panel">
+                    <h2 class="panel-title">Monthly Cost Pressure</h2>
+                    <p class="panel-subtitle">Actual Cost compared with Earned Value by reporting month</p>
+                    <div class="chart-wrap short"><canvas id="riskTrendChart"></canvas></div>
+                </div>
+                <div class="panel">
+                    <h2 class="panel-title">Portfolio Risk Quadrant</h2>
+                    <p class="panel-subtitle">Projects below 1.00 CPI or SPI require attention</p>
+                    <div class="chart-wrap short"><canvas id="riskScatterChart"></canvas></div>
+                    <div class="callout" id="riskCallout"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DETAIL -->
+    <section class="page" id="page-detail">
+        <div class="detail-header">
+            <div>
+                <h2 class="panel-title">Project Detail</h2>
+                <p class="panel-subtitle">Drill into one project's financial, schedule and scenario performance</p>
+            </div>
+            <select id="detailProject"></select>
+        </div>
+
+        <div class="kpi-grid" id="detailKpis"></div>
+
+        <div class="detail-grid">
+            <div class="panel">
+                <h2 class="panel-title">Project EVM Trend</h2>
+                <p class="panel-subtitle">Cumulative PV / EV / AC by month</p>
+                <div class="chart-wrap"><canvas id="detailTrendChart"></canvas></div>
+            </div>
+
+            <div class="panel">
+                <h2 class="panel-title">Schedule &amp; Controls</h2>
+                <p class="panel-subtitle">Approved baseline, recovery and current scenario</p>
+                <div class="fact-list" id="detailFacts"></div>
+                <div class="callout" id="detailScenario"></div>
+            </div>
+
+            <div class="panel full">
+                <h2 class="panel-title">Management Interpretation</h2>
+                <p class="panel-subtitle">Portfolio-style explanation of what the indicators mean</p>
+                <div class="narrative" id="detailNarrative"></div>
+            </div>
+        </div>
+    </section>
+
+    <div class="disclaimer">
+        Portfolio disclaimer: synthetic data and fictional Harborview Water &amp; Sewer Department.
+        Dashboard reads processed CSVs directly from the public GitHub repository and is intended to demonstrate
+        industrial engineering, earned value management, project controls, schedule analysis and executive reporting.
+    </div>
+</main>
+</div>
+
+<script>
+const BASE = "https://raw.githubusercontent.com/calebowen10/water-capital-program-controls/main/02_data/processed/";
+const FILES = {
+  status: "evm_project_status.csv",
+  programMonth: "evm_program_month.csv",
+  projectMonth: "evm_project_month.csv",
+  schedule: "schedule_reconciliation_final.csv",
+  scenarios: "phase4b_scenario_assumptions.csv",
+  wbs: "wbs.csv",
+  commitments: "synthetic_commitment_register.csv"
+};
+
+const COLORS = {
+  accent:"#b97b58", gray:"#9a9a9a", dark:"#252525",
+  good:"#5f8f50", watch:"#c58a42", bad:"#c54c44",
+  blue:"#627f9a", light:"#e8e4df"
+};
+
+let DATA = {};
+let charts = {};
+let selectedMetric = "CPI";
+let selectedProject = "ALL";
+let selectedStatus = "ALL";
+
+const fmtMoney = v => {
+  if (v === null || v === undefined || isNaN(v)) return "—";
+  const a = Math.abs(v);
+  if (a >= 1e9) return "$"+(v/1e9).toFixed(2)+"bn";
+  if (a >= 1e6) return "$"+(v/1e6).toFixed(2)+"M";
+  if (a >= 1e3) return "$"+(v/1e3).toFixed(1)+"K";
+  return "$"+Math.round(v).toLocaleString();
+};
+const fmtPct = v => isFinite(v) ? (v*100).toFixed(1)+"%" : "—";
+const fmtIdx = v => isFinite(v) ? Number(v).toFixed(2) : "—";
+const n = v => (v === "" || v === null || v === undefined) ? null : Number(v);
+
+function parseCsv(text){
+  return Papa.parse(text,{header:true,skipEmptyLines:true,dynamicTyping:true}).data;
+}
+
+async function loadData(){
+  const entries = await Promise.all(Object.entries(FILES).map(async ([key,file])=>{
+    const r = await fetch(BASE + file);
+    if(!r.ok) throw new Error(`Could not load ${file} (${r.status})`);
+    return [key, parseCsv(await r.text())];
+  }));
+  DATA = Object.fromEntries(entries);
+
+  DATA.status = DATA.status.map(d=>({
+    ...d,
+    BAC_USD:n(d.BAC_USD), PV_USD:n(d.PV_USD), EV_USD:n(d.EV_USD), AC_USD:n(d.AC_USD),
+    CV_USD:n(d.CV_USD), SV_USD:n(d.SV_USD), CPI:n(d.CPI), SPI:n(d.SPI),
+    EAC_USD:n(d.EAC_USD), ETC_USD:n(d.ETC_USD), VAC_USD:n(d.VAC_USD)
+  }));
+
+  DATA.names = {};
+  DATA.wbs.forEach(r=>{ if(r.Project_ID && r.Project_Name && !DATA.names[r.Project_ID]) DATA.names[r.Project_ID]=r.Project_Name; });
+
+  document.getElementById("loading").style.display="none";
+  document.getElementById("statusDatePill").textContent =
+    "Status date: " + (DATA.status.find(d=>d.Project_ID==="PROGRAM")?.Status_Date || "2026-03-31");
+
+  buildFilters();
+  renderAll();
+}
+
+function projectsBase(){
+  return DATA.status.filter(d=>d.Project_ID!=="PROGRAM");
+}
+function filteredProjects(){
+  return projectsBase().filter(d =>
+    (selectedProject==="ALL" || d.Project_ID===selectedProject) &&
+    (selectedStatus==="ALL" || d.Scenario_Status===selectedStatus)
+  );
+}
+function programRow(){return DATA.status.find(d=>d.Project_ID==="PROGRAM");}
+function projectName(id){return DATA.names[id] || id;}
+function statusClass(d){
+  if(d.CPI==null || d.SPI==null) return "neutral";
+  if(d.CPI<.90 || d.SPI<.90) return "bad";
+  if(d.CPI<.95 || d.SPI<.95) return "watch";
+  return "good";
+}
+function statusLabel(d){
+  const s=statusClass(d);
+  return s==="bad"?"Critical":s==="watch"?"Watch":s==="good"?"On / Near Plan":"Not Started";
+}
+function colorFor(d){
+  const s=statusClass(d);
+  return s==="bad"?COLORS.bad:s==="watch"?COLORS.watch:s==="good"?COLORS.good:COLORS.gray;
+}
+function destroyChart(id){ if(charts[id]){charts[id].destroy();delete charts[id];} }
+
+function buildFilters(){
+  const gp=document.getElementById("globalProject");
+  Object.keys(DATA.names).sort().forEach(id=>{
+    const o=document.createElement("option");o.value=id;o.textContent=`${id} — ${DATA.names[id]}`;gp.appendChild(o);
+  });
+  const statuses=[...new Set(projectsBase().map(d=>d.Scenario_Status))].sort();
+  const gs=document.getElementById("globalStatus");
+  statuses.forEach(s=>{const o=document.createElement("option");o.value=s;o.textContent=s;gs.appendChild(o)});
+
+  const dp=document.getElementById("detailProject");
+  Object.keys(DATA.names).sort().forEach(id=>{
+    const o=document.createElement("option");o.value=id;o.textContent=`${id} — ${DATA.names[id]}`;dp.appendChild(o);
+  });
+  dp.value="P03";
+}
+
+function kpi(label,value,badgeText,badgeClass="neutral",foot=""){
+ return `<div class="card kpi-card">
+   <div class="kpi-title">${label}</div>
+   <div class="kpi-value">${value}</div>
+   <div class="kpi-foot"><span class="badge ${badgeClass}">${badgeText}</span>${foot?`<span>${foot}</span>`:""}</div>
+ </div>`;
+}
+
+function renderPerformance(){
+  const p=programRow();
+  const selected = selectedProject==="ALL" ? p : projectsBase().find(d=>d.Project_ID===selectedProject);
+  const totalEnvelope = selectedProject==="ALL" ? 96000000 : selected.BAC_USD;
+  const headroom = totalEnvelope - selected.EAC_USD;
+  const gap = selected.AC_USD - selected.EV_USD;
+
+  document.getElementById("performanceKpis").innerHTML = [
+    kpi(selectedProject==="ALL"?"Approved Program":"Project BAC",fmtMoney(totalEnvelope),
+        selectedProject==="ALL"?"$88.5M BAC + $7.5M reserve":selected.Scenario_Status,"neutral"),
+    kpi("Earned Value",fmtMoney(selected.EV_USD),fmtPct(selected.EV_USD/selected.BAC_USD),"good","of BAC"),
+    kpi("Actual Cost",fmtMoney(selected.AC_USD),(gap>=0?"+":"")+fmtMoney(gap)+" vs EV",gap>0?"bad":"good"),
+    kpi("Cost Performance",fmtIdx(selected.CPI),selected.CPI>=1?"On / ahead":selected.CPI>=.95?"Near plan":selected.CPI>=.9?"Watch":"Critical",statusClass({...selected,SPI:1})),
+    kpi("Schedule Performance",fmtIdx(selected.SPI),selected.SPI>=1?"On / ahead":selected.SPI>=.95?"Near plan":selected.SPI>=.9?"Watch":"Critical",statusClass({...selected,CPI:1})),
+    kpi("Forecast at Completion",fmtMoney(selected.EAC_USD),
+        headroom>=0?`${fmtMoney(headroom)} headroom`:`${fmtMoney(Math.abs(headroom))} over`,headroom>=0?"good":"bad")
+  ].join("");
+
+  const pts=filteredProjects().filter(d=>d.CPI!=null&&d.SPI!=null).map(d=>({
+      x:d.SPI,y:d.CPI,r:Math.max(6,Math.sqrt(d.BAC_USD/1e6)*4),
+      id:d.Project_ID,name:projectName(d.Project_ID),bac:d.BAC_USD,color:colorFor(d)
+  }));
+  destroyChart("performanceScatter");
+  charts.performanceScatter=new Chart(document.getElementById("performanceScatter"),{
+    type:"bubble",
+    data:{datasets:[{data:pts,backgroundColor:pts.map(p=>p.color+"cc"),borderColor:pts.map(p=>p.color),borderWidth:1.5}]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:c=>`${c.raw.id} ${c.raw.name}: CPI ${c.raw.y.toFixed(2)}, SPI ${c.raw.x.toFixed(2)}, BAC ${fmtMoney(c.raw.bac)}`}}
+      },
+      scales:{
+        x:{title:{display:true,text:"Schedule Performance Index (SPI)"},min:.76,max:1.06,grid:{color:"#efefef"}},
+        y:{title:{display:true,text:"Cost Performance Index (CPI)"},min:.82,max:1.07,grid:{color:"#efefef"}}
+      }
+    },
+    plugins:[quadrantPlugin]
+  });
+
+  const pool=filteredProjects().filter(d=>d.CPI!=null||d.SPI!=null);
+  const best=[...pool].filter(d=>d.CPI!=null).sort((a,b)=>b.CPI-a.CPI)[0];
+  const worstCost=[...pool].filter(d=>d.CPI!=null).sort((a,b)=>a.CPI-b.CPI)[0];
+  const worstSchedule=[...pool].filter(d=>d.SPI!=null).sort((a,b)=>a.SPI-b.SPI)[0];
+  const biggestRisk=[...pool].sort((a,b)=>a.VAC_USD-b.VAC_USD)[0];
+
+  const ig=document.getElementById("insightGrid");
+  if(!pool.length){ig.innerHTML="<div class='insight'>No projects match the current filters.</div>";}
+  else ig.innerHTML=`
+    ${insight("Best Cost Performer",best,"good",`CPI ${fmtIdx(best.CPI)} · ${fmtMoney(best.VAC_USD)} VAC`)}
+    ${insight("Worst Cost Performer",worstCost,"bad",`CPI ${fmtIdx(worstCost.CPI)} · ${fmtMoney(worstCost.AC_USD-bestZero(worstCost.EV_USD))} cost gap`)}
+    ${insight("Biggest Schedule Risk",worstSchedule,"info",`SPI ${fmtIdx(worstSchedule.SPI)} · ${fmtMoney(worstSchedule.SV_USD)} SV`)}
+    ${insight("Biggest Forecast Exposure",biggestRisk,"watch",`EAC ${fmtMoney(biggestRisk.EAC_USD)} · VAC ${fmtMoney(biggestRisk.VAC_USD)}`)}
+  `;
+
+  const f=filteredProjects();
+  destroyChart("forecastChart");
+  charts.forecastChart=new Chart(document.getElementById("forecastChart"),{
+    type:"bar",
+    data:{
+      labels:f.map(d=>d.Project_ID),
+      datasets:[
+        {label:"BAC",data:f.map(d=>d.BAC_USD),backgroundColor:"#b2b2b2"},
+        {label:"EAC",data:f.map(d=>d.EAC_USD),backgroundColor:COLORS.accent}
+      ]
+    },
+    options:commonBarOptions("$")
+  });
+
+  destroyChart("evmTrendChart");
+  const pm=DATA.programMonth;
+  charts.evmTrendChart=new Chart(document.getElementById("evmTrendChart"),{
+    type:"line",
+    data:{
+      labels:pm.map(d=>d.Reporting_Month),
+      datasets:[
+        {label:"Planned Value",data:pm.map(d=>n(d.Cumulative_PV_USD)),borderColor:"#999",backgroundColor:"#999",tension:.2,borderWidth:2},
+        {label:"Earned Value",data:pm.map(d=>n(d.Cumulative_EV_USD)),borderColor:COLORS.accent,backgroundColor:COLORS.accent,tension:.2,borderWidth:2.4},
+        {label:"Actual Cost",data:pm.map(d=>n(d.Cumulative_AC_USD)),borderColor:"#222",backgroundColor:"#222",tension:.2,borderDash:[6,4],borderWidth:2}
+      ]
+    },
+    options:commonLineOptions()
+  });
+}
+function bestZero(x){return x||0}
+function insight(label,d,cls,text){
+ return `<div class="insight ${cls}">
+   <div class="insight-label">${label}</div>
+   <h3>${d.Project_ID} — ${projectName(d.Project_ID)}</h3>
+   <p>${text}</p>
+ </div>`;
+}
+
+const quadrantPlugin = {
+  id:"quadrants",
+  beforeDraw(chart){
+    const {ctx,chartArea:{left,right,top,bottom},scales:{x,y}}=chart;
+    const x0=x.getPixelForValue(1), y0=y.getPixelForValue(1);
+    ctx.save();
+    ctx.strokeStyle="#cfcfcf";ctx.setLineDash([5,5]);ctx.lineWidth=1;
+    ctx.beginPath();ctx.moveTo(x0,top);ctx.lineTo(x0,bottom);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(left,y0);ctx.lineTo(right,y0);ctx.stroke();
+    ctx.restore();
+  }
+};
+
+function commonBarOptions(prefix){
+ return {
+   responsive:true,maintainAspectRatio:false,
+   plugins:{legend:{position:"top",align:"start"},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtMoney(c.raw)}`}}},
+   scales:{
+     x:{grid:{display:false}},
+     y:{grid:{color:"#efefef"},ticks:{callback:v=>fmtMoney(v)}}
+   }
+ };
+}
+function commonLineOptions(){
+ return {
+   responsive:true,maintainAspectRatio:false,
+   plugins:{legend:{position:"top",align:"start"},tooltip:{callbacks:{label:c=>`${c.dataset.label}: ${fmtMoney(c.raw)}`}}},
+   scales:{x:{grid:{display:false}},y:{grid:{color:"#efefef"},ticks:{callback:v=>fmtMoney(v)}}}
+ };
+}
+
+function renderScorecard(){
+  const p=programRow();
+  document.getElementById("scoreKpis").innerHTML=[
+    kpi("Project BAC",fmtMoney(p.BAC_USD),"Baselined work","neutral"),
+    kpi("Earned Value",fmtMoney(p.EV_USD),fmtPct(p.EV_USD/p.BAC_USD),"good","earned"),
+    kpi("Actual Cost",fmtMoney(p.AC_USD),fmtMoney(p.AC_USD-p.EV_USD)+" above EV","bad"),
+    kpi("Cost Performance",fmtIdx(p.CPI),p.CPI<.95?"Below target":"Near target",p.CPI<.95?"bad":"watch"),
+    kpi("Schedule Performance",fmtIdx(p.SPI),p.SPI<1?"Below target":"On target",p.SPI<.95?"bad":"watch"),
+    kpi("Forecast",fmtMoney(p.EAC_USD),fmtMoney(96000000-p.EAC_USD)+" program headroom","good")
+  ].join("");
+
+  renderScoreCharts();
+
+  const f=filteredProjects();
+  document.getElementById("scoreTableBody").innerHTML=f.map(d=>{
+    const earned=d.BAC_USD?d.EV_USD/d.BAC_USD:0;
+    const cls=statusClass(d);
+    return `<tr>
+      <td><strong>${d.Project_ID} — ${projectName(d.Project_ID)}</strong><div class="project-sub">${d.Scenario_Status}</div></td>
+      <td><div class="progress-track"><div class="progress-fill" style="width:${Math.min(100,earned*100)}%;background:${colorFor(d)}"></div></div><div class="project-sub">${fmtPct(earned)}</div></td>
+      <td>${fmtIdx(d.CPI)}</td><td>${fmtIdx(d.SPI)}</td><td>${fmtMoney(d.VAC_USD)}</td>
+      <td><span class="status-dot ${cls}"></span>${statusLabel(d)}</td>
+    </tr>`;
+  }).join("");
+}
+
+function renderScoreCharts(){
+  const f=filteredProjects();
+  let labels=[], values=[], target=[], chartLabel="", yFmt=v=>v;
+  if(selectedMetric==="CPI"){
+    labels=f.map(d=>d.Project_ID);values=f.map(d=>d.CPI);target=f.map(()=>1);chartLabel="CPI";
+    yFmt=v=>Number(v).toFixed(2);
+  } else if(selectedMetric==="SPI"){
+    labels=f.map(d=>d.Project_ID);values=f.map(d=>d.SPI);target=f.map(()=>1);chartLabel="SPI";
+    yFmt=v=>Number(v).toFixed(2);
+  } else if(selectedMetric==="EAC"){
+    labels=f.map(d=>d.Project_ID);values=f.map(d=>d.EAC_USD);target=f.map(d=>d.BAC_USD);chartLabel="EAC";
+    yFmt=v=>fmtMoney(v);
+  } else {
+    labels=f.map(d=>d.Project_ID);values=f.map(d=>d.VAC_USD);target=f.map(()=>0);chartLabel="VAC";
+    yFmt=v=>fmtMoney(v);
+  }
+
+  destroyChart("scoreBarChart");
+  charts.scoreBarChart=new Chart(document.getElementById("scoreBarChart"),{
+    type:"bar",
+    data:{labels,datasets:[
+      {label:chartLabel,data:values,backgroundColor:COLORS.accent},
+      {label:selectedMetric==="EAC"?"BAC":"Target",data:target,backgroundColor:"#b3b3b3"}
+    ]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:"top",align:"start"}},
+      scales:{x:{grid:{display:false}},y:{grid:{color:"#efefef"},ticks:{callback:yFmt}}}
+    }
+  });
+
+  // Main chart shows same KPI across projects with an explicit target line.
+  destroyChart("scoreMainChart");
+  charts.scoreMainChart=new Chart(document.getElementById("scoreMainChart"),{
+    type:"bar",
+    data:{labels,datasets:[
+      {type:"bar",label:chartLabel,data:values,backgroundColor:values.map((v,i)=>{
+        if(selectedMetric==="CPI"||selectedMetric==="SPI") return v<.9?COLORS.bad:v<.95?COLORS.watch:COLORS.accent;
+        if(selectedMetric==="VAC") return v<0?COLORS.bad:COLORS.good;
+        return values[i]>target[i]?COLORS.bad:COLORS.accent;
+      })},
+      {type:"line",label:selectedMetric==="EAC"?"BAC":"Target",data:target,borderColor:"#222",backgroundColor:"#222",borderDash:[5,4],pointRadius:0,borderWidth:2}
+    ]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{position:"top",align:"start"}},
+      scales:{x:{grid:{display:false}},y:{grid:{color:"#efefef"},ticks:{callback:yFmt}}}
+    }
+  });
+
+  const prog=programRow();
+  let rec="";
+  if(selectedMetric==="CPI") rec=`Program CPI is ${fmtIdx(prog.CPI)}. Cost performance is below plan; prioritize P05, P04 and P03 for corrective-action review.`;
+  if(selectedMetric==="SPI") rec=`Program SPI is ${fmtIdx(prog.SPI)}. Overall schedule performance is closer to plan than cost performance, but P08 remains the clearest schedule exception.`;
+  if(selectedMetric==="EAC") rec=`Current portfolio EAC is ${fmtMoney(prog.EAC_USD)} versus ${fmtMoney(prog.BAC_USD)} project BAC, leaving only ${fmtMoney(96000000-prog.EAC_USD)} of the total $96M approved envelope.`;
+  if(selectedMetric==="VAC") rec=`Program VAC against project BAC is ${fmtMoney(prog.VAC_USD)}. The contingency reserve currently absorbs most of that forecast pressure.`;
+  document.getElementById("scoreRecommendation").innerHTML="<strong>Recommendation:</strong> "+rec;
+}
+
+function renderRisk(){
+  const p=programRow();
+  const atRisk=projectsBase().filter(d=>d.CPI!=null&&d.SPI!=null&&(d.CPI<.95||d.SPI<.95)).length;
+  const recovery=DATA.schedule.filter(d=>String(d.Status).includes("RECOVERY")).length;
+  const commitments=DATA.commitments.reduce((a,d)=>a+n(d.Unincurred_Commitment_USD),0);
+
+  document.getElementById("riskKpis").innerHTML=[
+    kpi("Forecast Overrun vs BAC",fmtMoney(Math.max(0,p.EAC_USD-p.BAC_USD)),"Against $88.5M BAC","bad"),
+    kpi("Headroom vs $96M",fmtMoney(96000000-p.EAC_USD),"Remaining envelope","good"),
+    kpi("Unincurred Commitments",fmtMoney(commitments),"Open commitments","watch"),
+    kpi("Projects at Risk",atRisk.toString(),"CPI or SPI < 0.95",atRisk>4?"bad":"watch"),
+    kpi("Recovery Schedules",recovery.toString(),"Approved recovery baselines","neutral"),
+    kpi("Program Contingency","$7.50M","Reserve at approval","neutral")
+  ].join("");
+
+  const risk=filteredProjects().filter(d=>d.VAC_USD<0).sort((a,b)=>a.VAC_USD-b.VAC_USD);
+  destroyChart("riskParetoChart");
+  charts.riskParetoChart=new Chart(document.getElementById("riskParetoChart"),{
+    type:"bar",
+    data:{labels:risk.map(d=>d.Project_ID),datasets:[{label:"Forecast exposure",data:risk.map(d=>Math.abs(d.VAC_USD)),backgroundColor:risk.map((d,i)=>i<3?COLORS.bad:COLORS.accent)}]},
+    options:{
+      indexAxis:"y",responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>fmtMoney(c.raw)}}},
+      scales:{x:{grid:{color:"#efefef"},ticks:{callback:v=>fmtMoney(v)}},y:{grid:{display:false}}}
+    }
+  });
+
+  destroyChart("riskTrendChart");
+  charts.riskTrendChart=new Chart(document.getElementById("riskTrendChart"),{
+    type:"bar",
+    data:{labels:DATA.programMonth.map(d=>d.Reporting_Month),datasets:[
+      {label:"Actual Cost",data:DATA.programMonth.map(d=>n(d.Monthly_AC_USD)),backgroundColor:"#929292"},
+      {type:"line",label:"Earned Value",data:DATA.programMonth.map(d=>n(d.Monthly_EV_USD)),borderColor:"#222",backgroundColor:"#222",borderDash:[4,3],pointRadius:0,borderWidth:2}
+    ]},
+    options:commonBarOptions("$")
+  });
+
+  const pts=filteredProjects().filter(d=>d.CPI!=null&&d.SPI!=null).map(d=>({x:d.SPI,y:d.CPI,r:7,id:d.Project_ID,name:projectName(d.Project_ID),color:colorFor(d)}));
+  destroyChart("riskScatterChart");
+  charts.riskScatterChart=new Chart(document.getElementById("riskScatterChart"),{
+    type:"bubble",
+    data:{datasets:[{data:pts,backgroundColor:pts.map(p=>p.color+"cc"),borderColor:pts.map(p=>p.color)}]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>`${c.raw.id}: CPI ${c.raw.y.toFixed(2)} / SPI ${c.raw.x.toFixed(2)}`}}},
+      scales:{x:{min:.76,max:1.06,grid:{color:"#efefef"},title:{display:true,text:"SPI"}},y:{min:.82,max:1.07,grid:{color:"#efefef"},title:{display:true,text:"CPI"}}}
+    },
+    plugins:[quadrantPlugin]
+  });
+
+  const biggest=[...projectsBase()].sort((a,b)=>a.VAC_USD-b.VAC_USD)[0];
+  const sc=DATA.scenarios.find(d=>d.Project_ID===biggest.Project_ID);
+  document.getElementById("riskCallout").innerHTML=
+    `<strong>Biggest forecast risk — ${biggest.Project_ID}: ${projectName(biggest.Project_ID)}</strong><br>
+     BAC ${fmtMoney(biggest.BAC_USD)} · EAC ${fmtMoney(biggest.EAC_USD)} · CPI ${fmtIdx(biggest.CPI)} · SPI ${fmtIdx(biggest.SPI)} · VAC ${fmtMoney(biggest.VAC_USD)}.
+     ${sc?sc.Scope_Description:""}`;
+}
+
+function renderDetail(){
+  const id=document.getElementById("detailProject").value || "P03";
+  const d=projectsBase().find(x=>x.Project_ID===id);
+  if(!d) return;
+
+  document.getElementById("detailKpis").innerHTML=[
+    kpi("BAC",fmtMoney(d.BAC_USD),d.Scenario_Status,"neutral"),
+    kpi("Earned Value",fmtMoney(d.EV_USD),fmtPct(d.EV_USD/d.BAC_USD),"good","of BAC"),
+    kpi("Actual Cost",fmtMoney(d.AC_USD),fmtMoney(d.AC_USD-d.EV_USD)+" vs EV",d.AC_USD>d.EV_USD?"bad":"good"),
+    kpi("CPI",fmtIdx(d.CPI),statusLabel({...d,SPI:1}),statusClass({...d,SPI:1})),
+    kpi("SPI",fmtIdx(d.SPI),statusLabel({...d,CPI:1}),statusClass({...d,CPI:1})),
+    kpi("EAC",fmtMoney(d.EAC_USD),fmtMoney(d.VAC_USD)+" VAC",d.VAC_USD<0?"bad":"good")
+  ].join("");
+
+  const pm=DATA.projectMonth.filter(r=>r.Project_ID===id);
+  destroyChart("detailTrendChart");
+  charts.detailTrendChart=new Chart(document.getElementById("detailTrendChart"),{
+    type:"line",
+    data:{labels:pm.map(r=>r.Reporting_Month),datasets:[
+      {label:"PV",data:pm.map(r=>n(r.Baseline_Cumulative_PV_USD)),borderColor:"#999",backgroundColor:"#999",borderWidth:2,tension:.2},
+      {label:"EV",data:pm.map(r=>n(r.Scenario_Cumulative_EV_USD)),borderColor:COLORS.accent,backgroundColor:COLORS.accent,borderWidth:2.3,tension:.2},
+      {label:"AC",data:pm.map(r=>n(r.Scenario_Cumulative_AC_USD)),borderColor:"#222",backgroundColor:"#222",borderDash:[5,4],borderWidth:2,tension:.2}
+    ]},
+    options:commonLineOptions()
+  });
+
+  const sch=DATA.schedule.find(r=>r.Project_ID===id) || {};
+  const sc=DATA.scenarios.find(r=>r.Project_ID===id) || {};
+  const comm=DATA.commitments.filter(r=>r.Project_ID===id);
+  const authorized=comm.reduce((a,r)=>a+n(r.Authorized_Commitment_USD),0);
+  const unincurred=comm.reduce((a,r)=>a+n(r.Unincurred_Commitment_USD),0);
+
+  document.getElementById("detailFacts").innerHTML=[
+    fact("Project",`${id} — ${projectName(id)}`),
+    fact("Scenario",d.Scenario_Status),
+    fact("Recovery Finish",sch.Approved_Recovery_Baseline_Finish || "—"),
+    fact("Finish Variance",sch.Finish_Variance_Calendar_Days!=null?`${sch.Finish_Variance_Calendar_Days} days`:"—"),
+    fact("Authorized Commitments",fmtMoney(authorized)),
+    fact("Unincurred Commitments",fmtMoney(unincurred))
+  ].join("");
+
+  document.getElementById("detailScenario").innerHTML=
+    `<strong>Scenario assumption:</strong> ${sc.Scope_Description || "No scenario description available."}
+     ${sc.Synthetic_Workday_Shift!=null?` Synthetic workday shift: ${sc.Synthetic_Workday_Shift}.`:""}
+     ${sc.Synthetic_Actual_Cost_Factor_Pct!=null?` Actual-cost factor: ${sc.Synthetic_Actual_Cost_Factor_Pct}%.`:""}`;
+
+  let interpretation="";
+  if(d.CPI==null && d.SPI==null){
+    interpretation=`${id} has not entered measurable EVM performance at the March 2026 cutoff. The current management focus is readiness, procurement, dependencies and maintaining the approved baseline.`;
+  } else {
+    const cost=d.CPI<1?`Cost efficiency is below plan (CPI ${fmtIdx(d.CPI)}), meaning the project is earning less value than each dollar spent.`:`Cost efficiency is favorable (CPI ${fmtIdx(d.CPI)}).`;
+    const sched=d.SPI<1?`Schedule performance is behind plan (SPI ${fmtIdx(d.SPI)}).`:`Schedule performance is on or ahead of plan (SPI ${fmtIdx(d.SPI)}).`;
+    const forecast=d.VAC_USD<0?`The current EAC of ${fmtMoney(d.EAC_USD)} implies a forecast overrun of ${fmtMoney(Math.abs(d.VAC_USD))} against BAC.`:`The current EAC remains within BAC by ${fmtMoney(d.VAC_USD)}.`;
+    interpretation=`<strong>${projectName(id)}</strong> is currently classified as <strong>${statusLabel(d)}</strong>. ${cost} ${sched} ${forecast}
+    This view is intended to connect project-level execution to program controls: BAC establishes the approved project baseline, PV represents planned progress,
+    EV represents budgeted value actually earned, AC captures incurred cost, and EAC translates current performance into a forward-looking cost expectation.`;
+  }
+  document.getElementById("detailNarrative").innerHTML=interpretation;
+}
+function fact(label,value){return `<div class="fact"><span>${label}</span><strong>${value}</strong></div>`;}
+
+function renderAll(){
+  renderPerformance();
+  renderScorecard();
+  renderRisk();
+  renderDetail();
+}
+
+document.querySelectorAll(".nav-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    document.getElementById("page-"+btn.dataset.page).classList.add("active");
+    const subtitles={
+      performance:"Asset & Project Controls Intelligence",
+      scorecard:"KPI vs Target Scorecard",
+      risk:"Risk, Forecast & Change Intelligence",
+      detail:"Project-Level Controls & EVM Drilldown"
+    };
+    document.getElementById("pageSubtitle").textContent=subtitles[btn.dataset.page];
+    setTimeout(()=>Object.values(charts).forEach(c=>c.resize()),50);
+  });
+});
+
+document.getElementById("globalProject").addEventListener("change",e=>{
+  selectedProject=e.target.value;renderAll();
+});
+document.getElementById("globalStatus").addEventListener("change",e=>{
+  selectedStatus=e.target.value;renderAll();
+});
+document.getElementById("detailProject").addEventListener("change",renderDetail);
+
+document.querySelectorAll(".metric-tab").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".metric-tab").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    selectedMetric=btn.dataset.metric;
+    renderScoreCharts();
+  });
+});
+
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  selectedProject="ALL";selectedStatus="ALL";selectedMetric="CPI";
+  document.getElementById("globalProject").value="ALL";
+  document.getElementById("globalStatus").value="ALL";
+  document.getElementById("detailProject").value="P03";
+  document.querySelectorAll(".metric-tab").forEach(b=>b.classList.toggle("active",b.dataset.metric==="CPI"));
+  renderAll();
+});
+
+loadData().catch(err=>{
+  document.getElementById("loading").style.display="none";
+  const box=document.getElementById("errorBox");
+  box.style.display="block";
+  box.textContent="Dashboard data could not be loaded from GitHub. " + err.message +
+    " If you opened the file offline, connect to the internet or host this page on GitHub Pages.";
+  console.error(err);
+});
+</script>
+</body>
+</html>
