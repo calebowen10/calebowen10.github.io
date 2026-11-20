@@ -1,0 +1,210 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Gear Fault Diagnosis · Caleb Owen</title><meta name="description" content="KPCA and fuzzy neural-network methods for vibration-based mechanical fault classification."><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"><style>
+:root{--espresso:#39271e;--brown:#65412e;--copper:#bb855f;--cream:#f5f0e9;--paper:#fffaf4;--line:#dbc7b6}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 90% 10%,#ecd6c4,transparent 35%),linear-gradient(145deg,#f8f4ee,#ebded2);color:#302722;font:17px/1.76 'DM Sans',sans-serif}a{color:#805132}a:hover{color:#39271e}a:focus-visible{outline:3px solid var(--copper);outline-offset:3px}.subnav{position:sticky;top:0;z-index:9;background:#f5f0e9f2;backdrop-filter:blur(12px);border-bottom:1px solid #ccb8a6;display:flex;justify-content:space-between;align-items:center;gap:18px;padding:14px clamp(20px,5vw,70px)}.subnav .avatar{height:44px;width:44px;border-radius:50%;object-fit:cover;border:2px solid #bb855f;display:block}.subnav .links{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.subnav .links a{border:1px solid #bda592;padding:7px 15px;border-radius:60px;font:600 12px 'DM Sans',sans-serif;text-decoration:none}.subnav .links a:hover{color:white;background:#39271e}.wrap{max-width:1100px;margin:0 auto;padding:76px clamp(22px,5vw,70px) 100px}.kicker{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#956a4e;font-weight:700}.page-title{font:normal clamp(60px,8.6vw,112px)/1 'Instrument Serif',Georgia,serif;margin:12px 0 24px;letter-spacing:-.03em}.lead{font-size:19px;max-width:780px;color:#5d4f45}.project-item{margin-top:45px;border-top:1px solid #bca592;padding-top:34px}.project-item h3{font:normal clamp(36px,4vw,60px)/1.08 'Instrument Serif',serif;margin:0 0 12px}.project-item p,.project-item li{color:#51473f;line-height:1.8}.project-subtitle{color:#8c6345;font-size:15px;margin-bottom:13px}.status,.tag{display:inline-flex;border:1px solid #c7a98f;border-radius:40px;padding:5px 13px;margin:3px 4px 3px 0;color:#805132;font-size:11px;letter-spacing:.055em;text-transform:uppercase}.tags{margin:22px 0}.findings,.workflow,.metric,.project-metrics,.project-actions,.research-links{border-color:#dbc9b9}.findings{background:#fffaf5;padding:20px 27px;border:1px solid #e2d2c5;border-radius:8px;margin:25px 0}.findings h4{font:normal 33px 'Instrument Serif',serif;margin:0 0 8px}.workflow{margin:24px 0;background:#e9d8c7;padding:18px 24px;border-left:4px solid #a16d48;line-height:1.8}.project-metrics{display:flex;flex-wrap:wrap;gap:12px;margin:23px 0}.metric{background:#fffaf5;border:1px solid #e3d3c6;padding:13px 22px;min-width:145px;flex:1}.metric-value{display:block;font:normal 33px 'Instrument Serif',serif;color:#503426}.metric-label{display:block;color:#776358;font-size:12px}.project-link,.project-actions a{display:inline-block;background:#39271e!important;color:#fff!important;padding:11px 19px!important;border-radius:40px!important;text-decoration:none!important;margin:12px 9px 4px 0}.project-link:hover,.project-actions a:hover{background:#805132!important;color:white!important}.back{display:inline-block;margin-top:40px;border-bottom:1px solid #936f56;text-decoration:none;font-size:14px}iframe{max-width:100%}img{max-width:100%}@media(max-width:650px){.subnav{padding:11px 15px}.subnav .links a{padding:6px 10px}.wrap{padding:52px 23px}.project-metrics{display:grid;grid-template-columns:repeat(2,1fr)}}
+</style></head><body><header class="subnav"><a href="index.html" aria-label="Return to home"><img class="avatar" src="My%20headshot.jpeg" alt="Caleb Owen"></a><nav class="links" aria-label="Portfolio navigation"><a href="index.html">Home</a><a href="index.html#projects">Projects</a><a href="cv.html">CV</a><a href="index.html#contact">Contact</a></nav></header><main class="wrap"><div class="kicker">Machine learning / manufacturing</div><h1 class="page-title">Gear Fault Diagnosis</h1><p class="lead">KPCA and fuzzy neural-network methods for vibration-based mechanical fault classification.</p><article class="project-item">
+
+                    <h3>
+                        Gear Fault Diagnosis Using Kernel PCA & Fuzzy Neural Networks
+                    </h3>
+
+                    <div class="project-subtitle">
+                        Vibration-Based Fault Classification & Predictive Maintenance
+                    </div>
+
+                    <span class="status">
+                        Engineering Research Project · 2022
+                    </span>
+
+                    <p>
+                        This project examined how machine-learning methods can support
+                        mechanical fault diagnosis when only limited labeled examples
+                        of equipment failure are available. The problem is particularly
+                        relevant to predictive maintenance because real mechanical
+                        failures are often uncommon, expensive to reproduce, or unsafe
+                        to deliberately generate simply to create training data.
+                    </p>
+
+                    <p>
+                        Inspired by published work from Zhou and Tang, I implemented a
+                        fault-diagnosis workflow that combines
+                        <strong>Kernel Principal Component Analysis (KPCA)</strong>
+                        with a <strong>Fuzzy Neural Network (FNN)</strong>. The project
+                        used vibration information as the basis for distinguishing
+                        different gearbox operating and fault conditions.
+                    </p>
+
+                    <div class="workflow">
+                        Vibration Data → Feature Representation → Kernel PCA →
+                        Fuzzy Membership Functions → Neural Network →
+                        Fault Classification
+                    </div>
+
+                    <p>
+                        KPCA was used to transform nonlinear and correlated vibration
+                        information into a lower-dimensional feature space. This
+                        reduced the amount of information passed into the classifier
+                        while preserving the relationships most useful for separating
+                        operating conditions.
+                    </p>
+
+                    <p>
+                        The reduced feature representation was then passed into a fuzzy
+                        neural network. Rather than forcing every observation directly
+                        into a hard class boundary, the fuzzy architecture represents
+                        the degree to which an observation belongs to different learned
+                        fault patterns. This is valuable for machinery diagnosis because
+                        mechanical faults do not always produce perfectly distinct
+                        vibration signatures.
+                    </p>
+
+                    <p>
+                        The project gave me experience translating an academic engineering
+                        methodology into a complete analytical workflow that included
+                        feature processing, nonlinear dimensionality reduction, fuzzy
+                        reasoning, classification, and model interpretation. More broadly,
+                        it introduced me to the challenge of designing machine-learning
+                        systems for engineering environments where labeled data are much
+                        more constrained than they typically are in conventional analytics.
+                    </p>
+
+                    <div class="project-metrics">
+
+                        <div class="metric">
+                            <span class="metric-value">KPCA</span>
+                            <span class="metric-label">
+                                Nonlinear Feature Reduction
+                            </span>
+                        </div>
+
+                        <div class="metric">
+                            <span class="metric-value">FNN</span>
+                            <span class="metric-label">
+                                Fuzzy Neural Classification
+                            </span>
+                        </div>
+
+                        <div class="metric">
+                            <span class="metric-value">Vibration</span>
+                            <span class="metric-label">
+                                Condition Monitoring Data
+                            </span>
+                        </div>
+
+                        <div class="metric">
+                            <span class="metric-value">PdM</span>
+                            <span class="metric-label">
+                                Predictive Maintenance Application
+                            </span>
+                        </div>
+
+                    </div>
+
+                    <div class="tags">
+
+                        <span class="tag">Machine Learning</span>
+                        <span class="tag">Kernel PCA</span>
+                        <span class="tag">Fuzzy Neural Networks</span>
+                        <span class="tag">Predictive Maintenance</span>
+                        <span class="tag">Vibration Analysis</span>
+                        <span class="tag">Fault Diagnosis</span>
+                        <span class="tag">Manufacturing</span>
+
+                    </div>
+
+                    <div class="document-section">
+
+                        <h4>Research Basis & Full Project Documentation</h4>
+
+                        <p class="embed-description">
+                            I built this project from the methodology described by Zhou
+                            and Tang in their published gear-fault diagnosis study. The
+                            original research paper and my project report are shown
+                            separately so the source experiment, benchmark results,
+                            and my implementation are clearly attributed.
+                        </p>
+
+                        <div class="document-grid">
+
+                            <div class="document-card">
+
+                                <h5>Original Research Paper</h5>
+
+                                <p>
+                                    <em>
+                                        Harnessing fuzzy neural network for gear fault
+                                        diagnosis with limited data labels
+                                    </em>
+                                    by Zhou and Tang (2021). The paper provides the
+                                    experimental gearbox setup, vibration data structure,
+                                    KPCA feature-reduction method, fuzzy neural-network
+                                    architecture, and limited-label validation cases used
+                                    as the technical basis for my reproduction.
+                                </p>
+
+                                <a
+                                    href="10318958.pdf"
+                                    target="_blank"
+                                    class="project-link secondary"
+                                >
+                                    Open Original Paper
+                                </a>
+
+                            </div>
+
+                            <div class="document-card">
+
+                                <h5>My Technical Project Report</h5>
+
+                                <p>
+                                    My report documents the project from problem
+                                    formulation through model implementation: vibration
+                                    preprocessing, Gaussian-kernel KPCA, fuzzy membership
+                                    functions, rule-based neural classification,
+                                    leave-one-fault-condition-out validation, engineering
+                                    interpretation, limitations, and predictive-maintenance
+                                    relevance.
+                                </p>
+
+                                <a
+                                    href="Caleb_Owen_Gear_Fault_Diagnosis_Project_Report.pdf"
+                                    target="_blank"
+                                    class="project-link"
+                                >
+                                    Open My Full Report
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                        <h4>Embedded Project Report</h4>
+
+                        <p class="embed-description">
+                            The complete technical report is embedded below so the
+                            implementation can be reviewed directly on the portfolio
+                            page without opening a separate tab.
+                        </p>
+
+                        <iframe
+                            src="Caleb_Owen_Gear_Fault_Diagnosis_Project_Report.pdf#view=FitH"
+                            class="pdf-embed"
+                            title="Caleb Owen Gear Fault Diagnosis Technical Report"
+                            loading="lazy"
+                        ></iframe>
+
+                        <details class="paper-preview">
+
+                            <summary>
+                                Preview the original Zhou & Tang paper
+                            </summary>
+
+                            <iframe
+                                src="10318958.pdf#view=FitH"
+                                title="Original Zhou and Tang Gear Fault Diagnosis Paper"
+                                loading="lazy"
+                            ></iframe>
+
+                        </details>
+
+                    </div>
+
+                </article><a class="back" href="index.html#projects">← Back to selected projects</a></main></body></html>
